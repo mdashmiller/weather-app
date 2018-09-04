@@ -19,8 +19,18 @@ class App extends Component {
 
 	// component methods
 
+	convertToFahrenheit = k => {
+		// takes a temperature in Kelvin
+		// and returns it in Fahrenheit
+		const floatK = parseFloat(k)
+		return (
+			(1.8 * (floatK - 273)) + 32
+			).toFixed(1)
+	}
+
 	setTemp = result => {
-		this.setState( {temp: result.main.temp} )
+		const temp =  this.convertToFahrenheit(result.main.temp)
+		this.setState( {temp} )
 	}
 
 	// lifecycle methods
@@ -35,7 +45,7 @@ class App extends Component {
   	render() {
     	return (
     		<div className="App">
-    			<p>{this.state.temp}</p>
+    			<p>Temperature: {this.state.temp} F</p>
     		</div>
     	)
   	}
