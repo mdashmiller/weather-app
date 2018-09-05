@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import config from './config'
 import './App.css'
+import Frame from './components/Frame'
+import Tile from './components/Tile'
 
 // Open Weather Map API url details
 const lat = '29.6261'
@@ -14,10 +16,27 @@ const url = `${PATH_BASE}${COORDS}&APPID=${KEY}`
 class App extends Component {
 
 	state = {
-		temp: ''
+		temp: '',
+		description: '',
+		name: ''
 	}
 
 	// component methods
+
+	setDisplay = result => {
+		// takes results from API call and
+		// routes data to the proper channels
+		this.setTemp(result.main.temp)
+		this.setDescription(result.weather[0].description)
+		this.setName(result.name)
+	}
+
+	setTemp = tempK => {
+		// sets this.state.temp to the result
+		// obtained from Open Weather Map
+		const tempF =  this.convertToFahrenheit(tempK)
+		this.setState( {temp: tempF} )
+	}
 
 	convertToFahrenheit = k => {
 		// takes a temperature in Kelvin
@@ -28,25 +47,32 @@ class App extends Component {
 			).toFixed(1)
 	}
 
-	setTemp = result => {
-		const temp =  this.convertToFahrenheit(result.main.temp)
-		this.setState( {temp} )
-	}
+	setDescription = weather =>
+		// sets this.state.description to the result
+		// obtained from Open Weather Map
+		this.setState( {description: weather })
+
+	setName = name =>
+		// sets this.state.name to the result
+		// obtained from Open Weather Map
+		this.setState( {name} )
 
 	// lifecycle methods
 
 	componentDidMount() {
 		fetch(url)
 			.then(response => response.json())
-			.then(result => this.setTemp(result))
+			.then(result => this.setDisplay(result))
 			.catch(error => error)
 	}
 
   	render() {
     	return (
-    		<div className="App">
-    			<p>Temperature: {this.state.temp} F</p>
-    		</div>
+    		<Frame>
+    			<Tile>{this.state.temp} F</Tile>
+    			<Tile placeName>{this.state.name}</Tile>
+    			<Tile>{this.state.description}</Tile>
+    		</Frame>
     	)
   	}
 }
