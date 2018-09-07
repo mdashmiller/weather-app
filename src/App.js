@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import config from './config'
 import './App.css'
 import Frame from './components/Frame'
-import Icon from './components/Icon'
 import Search from './components/Search'
+import WeatherIcon from './components/WeatherIcon'
+import ThermoIcon from './components/ThermoIcon'
 
 // Open Weather Map API url details
 const lat = '29.6261'
@@ -13,11 +14,6 @@ const COORDS = `lat=${lat}&lon=${lon}`
 const KEY = config.key
 
 const url = `${PATH_BASE}${COORDS}&APPID=${KEY}`
-
-// weather-dependent icon details
-const sun = "fas fa-sun fa-3x"
-const cloud = "fas fa-cloud fa-3x"
-const thermo = "fas fa-thermometer-full fa-3x"
 
 class App extends Component {
 
@@ -66,6 +62,8 @@ class App extends Component {
 		this.setState( {name} )
 
 	setCondition = id =>
+		// sets this.state.condition to the result
+		// obtained from Open Weather Map
 		this.setState( {condition: id} )
 
 	// lifecycle methods
@@ -83,9 +81,8 @@ class App extends Component {
     			<h1>{this.state.name}</h1>
     			<h2>{this.state.temp} F</h2>
     			<h3>{this.state.description}</h3>
-    			<WeatherIcon id={this.state.description} />
-    			{/*<Icon className={sun}></Icon>*/}
-    			<Icon className={thermo}></Icon>
+    			<WeatherIcon id={this.state.condition} />
+    			<ThermoIcon temp={this.state.temp} />
     			<Search type="search" placeholder="search" />
     		</Frame>
     	)
