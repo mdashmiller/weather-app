@@ -21,7 +21,8 @@ class App extends Component {
 		temp: '',
 		description: '',
 		condition: '',
-		name: ''
+		name: '',
+		day: true
 	}
 
 	// component methods
@@ -33,6 +34,7 @@ class App extends Component {
 		this.setDescription(result.weather[0].description)
 		this.setName(result.name)
 		this.setCondition(result.weather[0].id)
+		this.dayOrNight(result.dt, result.sys.sunrise, result.sys.sunset)
 	}
 
 	setTemp = tempK => {
@@ -66,6 +68,28 @@ class App extends Component {
 		// obtained from Open Weather Map
 		this.setState( {condition: id} )
 
+	dayOrNight = (time, sunrise, sunset) => {
+		// determines if it is day or night
+		// and sets state accordingly
+		if (time >= sunrise && time < sunset) {
+			this.setState({ day: true })
+		} else {
+			this.setState({ day: false })
+		}
+
+		this.setColors()
+	}
+
+	setColors = () => {
+		// changes colors of background and
+		// fonts dependent on time of day
+		if (this.state.day) {
+			document.body.style = 'background: #4c7d98;'
+		} else {
+			document.body.style = 'background: #2a233c;'
+		}
+	}
+
 	// lifecycle methods
 
 	componentDidMount() {
@@ -77,14 +101,14 @@ class App extends Component {
 
   	render() {
     	return (
-    		<Frame>
-    			<h1>{this.state.name}</h1>
-    			<h2>{this.state.temp} F</h2>
-    			<h3>{this.state.description}</h3>
-    			<WeatherIcon id={this.state.condition} />
-    			<ThermoIcon temp={this.state.temp} />
-    			<Search type="search" placeholder="search" />
-    		</Frame>
+	    	<Frame>
+	    		<h1>{this.state.name}</h1>
+	   			<h2>{this.state.temp} F</h2>
+	   			<h3>{this.state.description}</h3>
+	   			<WeatherIcon id={this.state.condition} daytime={this.state.day} />
+	   			<ThermoIcon temp={this.state.temp} />
+	   			<Search type="search" placeholder="search" />
+	   		</Frame>
     	)
   	}
 }
