@@ -81,8 +81,8 @@ class App extends Component {
 	}
 
 	setColors = () => {
-		// changes colors of background and
-		// fonts dependent on time of day
+		// changes color of background dependent
+		// upon time of day
 		if (this.state.day) {
 			document.body.style = 'background: #4c7d98;'
 		} else {
@@ -102,12 +102,22 @@ class App extends Component {
   	render() {
     	return (
 	    	<Frame>
-	    		<h1>{this.state.name}</h1>
+	    		<h1
+	    			className={`${this.state.day ? 'day' : 'night'}`}
+	    		>
+	    			{this.state.name}
+	    		</h1>
 	   			<h2>{this.state.temp} F</h2>
 	   			<h3>{this.state.description}</h3>
-	   			<WeatherIcon id={this.state.condition} daytime={this.state.day} />
+	   			<WeatherIcon 
+	   				id={this.state.condition} 
+	   				daytime={this.state.day}
+	   			/>
 	   			<ThermoIcon temp={this.state.temp} />
-	   			<Search type="search" placeholder="search" />
+	   			<Search 
+	   				type="search" 
+	   				placeholder="search" 
+	   			/>
 	   		</Frame>
     	)
   	}
