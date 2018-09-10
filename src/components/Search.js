@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 const Search = styled.input`
 	background: #eee;
@@ -11,6 +11,11 @@ const Search = styled.input`
 	font-family: 'Font Awesome 5 Free', 'Varela Round', Arial, sans-serif;
 	font-weight: 900;
 	font-size: 18px;
+
+	${props => props.short && css`
+	    width: 114px;
+	    padding-left: 5px;
+	  `}
 `
 
 export default Search

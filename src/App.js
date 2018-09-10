@@ -5,6 +5,7 @@ import Frame from './components/Frame'
 import Search from './components/Search'
 import WeatherIcon from './components/WeatherIcon'
 import ThermoIcon from './components/ThermoIcon'
+import Button from './components/Button'
 
 // Open Weather Map API url details
 const lat = '29.6261'
@@ -22,7 +23,8 @@ class App extends Component {
 		description: '',
 		condition: '',
 		name: '',
-		day: true
+		day: true,
+		searchClicked: false
 	}
 
 	// component methods
@@ -90,6 +92,11 @@ class App extends Component {
 		}
 	}
 
+	handleClick = () =>
+		// changes the search box
+		// when user clicks in it
+		this.setState({ searchClicked: true })
+
 	// lifecycle methods
 
 	componentDidMount() {
@@ -114,10 +121,21 @@ class App extends Component {
 	   				daytime={this.state.day}
 	   			/>
 	   			<ThermoIcon temp={this.state.temp} />
-	   			<Search
+	   			{this.state.searchClicked
+	   			? <div> 
+		   			<Search
+		   				type="text"
+		   				placeholder="Enter US ZIP"
+		   				autofocus="autofocus"
+		   				short
+		   			/>
+		   			<Button>Go</Button>
+	   			</div>
+	   			: <Search
 	   				type="text"
 	   				placeholder="&#xf3c5;  Change Location"
-	   			/>
+	   				onClick={() => this.handleClick()}
+	   			/>}
 	   		</Frame>
     	)
   	}
