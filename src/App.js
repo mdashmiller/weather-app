@@ -114,9 +114,9 @@ class App extends Component {
 	   				daytime={this.state.day}
 	   			/>
 	   			<ThermoIcon temp={this.state.temp} />
-	   			<Search 
-	   				type="search" 
-	   				placeholder="search" 
+	   			<Search
+	   				type="text"
+	   				placeholder="&#xf3c5;  Change Location"
 	   			/>
 	   		</Frame>
     	)

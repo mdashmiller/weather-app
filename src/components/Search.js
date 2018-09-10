@@ -6,9 +6,11 @@ const Search = styled.input`
 	border-radius: 10px;
 	margin: 200px 0 20px;
 	width: 200px;
-	height: 24px;
-	padding-left: 4px;
-	font-family: 'Varela Round', Arial, sans-serif;
+	height: 34px;
+	padding-left: 8px;
+	font-family: 'Font Awesome 5 Free', 'Varela Round', Arial, sans-serif;
+	font-weight: 900;
+	font-size: 18px;
 `
 
 export default Search
