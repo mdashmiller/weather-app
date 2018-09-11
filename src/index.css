@@ -1,0 +1,19 @@
+.day {
+	color: #f46403;
+}
+
+.night {
+	color: #fff;
+}
+
+h2 {
+	color: #eee;
+}
+
+h3 {
+	color: #c3c3c3;
+}
+
+input:focus {
+	outline: none;
+}
