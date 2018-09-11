@@ -97,6 +97,14 @@ class App extends Component {
 		// when user clicks in it
 		this.setState({ searchClicked: true })
 
+	/*
+	lookUp = zip => {
+		// lookup weather data
+		// according to user-entered zipcode
+
+	}
+	*/
+
 	// lifecycle methods
 
 	componentDidMount() {
@@ -124,12 +132,17 @@ class App extends Component {
 	   			{this.state.searchClicked
 	   			? <div> 
 		   			<Search
+		   				id="zip"
 		   				type="text"
 		   				placeholder="Enter US ZIP"
 		   				autofocus="autofocus"
 		   				short
 		   			/>
-		   			<Button>Go</Button>
+		   			<Button
+		   				//onClick={this.lookUp(document.getElementById('zip').value())}
+		   			>
+		   			Go
+		   			</Button>
 	   			</div>
 	   			: <Search
 	   				type="text"
