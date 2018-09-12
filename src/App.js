@@ -119,7 +119,6 @@ class App extends Component {
 
   	render() {
     	return (
-
     		<Frame>
     			<h1
     				id="landing-title"
@@ -132,18 +131,37 @@ class App extends Component {
 	    				Now
 	    			</span>
     			</h1>
-    			<Search
-    				type="text"
-    				placeholder="Use My Location"
-    				landingPage
-    				userLocation
-    				//onClick={this.geolocate()}
-    			/>
-    			<Search
-    				placeholder="Lookup by Zipcode"
-    				landingPage
-    				userZip
-    			/>
+    			{this.state.searchClicked
+    				? <div> 
+    					<Search
+    						id="zip"
+    					    type="text"
+    					   	placeholder="Enter US ZIP"
+    					   	autofocus="autofocus"
+    					   	short
+    					/>
+    					<Button
+    					   	//onClick={this.lookUp(document.getElementById('zip').value())}
+    					>
+    					   	Go
+    				 	</Button>
+    				</div>
+    				: <div>
+    					<Search
+    						type="text"
+    						placeholder="Use My Location"
+    						landingPage
+    						userLocation
+    						//onClick={this.geolocate()}
+    					/>
+    					<Search
+    						placeholder="Lookup by Zipcode"
+    						onClick={() => this.handleClick()}
+    						landingPage
+    						userZip
+    					/>
+    				</div>
+    			}
     		</Frame>
     	/*	
 	    	<Frame>

@@ -19,6 +19,7 @@ const Search = styled.input`
 	${props => props.short && css`
 	    width: 114px;
 	    padding-left: 5px;
+	    margin: 0;
 	  `}
 
 	${props => props.landingPage && css`
