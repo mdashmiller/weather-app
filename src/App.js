@@ -24,7 +24,10 @@ class App extends Component {
 		condition: '',
 		name: '',
 		day: true,
-		searchClicked: false
+		searchClicked: false,
+		lat: '',
+		lon: '',
+		zip: ''
 	}
 
 	// component methods
@@ -116,6 +119,33 @@ class App extends Component {
 
   	render() {
     	return (
+
+    		<Frame>
+    			<h1
+    				id="landing-title"
+    				className={`${this.state.day ? 'day' : 'night'}`}
+    			>
+    				Weather
+	    			<span
+	    				className={`${this.state.day ? 'day-2' : 'night-2'}`}
+	    			>
+	    				Now
+	    			</span>
+    			</h1>
+    			<Search
+    				type="text"
+    				placeholder="Use My Location"
+    				landingPage
+    				userLocation
+    				//onClick={this.geolocate()}
+    			/>
+    			<Search
+    				placeholder="Lookup by Zipcode"
+    				landingPage
+    				userZip
+    			/>
+    		</Frame>
+    	/*	
 	    	<Frame>
 	    		<h1
 	    			className={`${this.state.day ? 'day' : 'night'}`}
@@ -150,6 +180,7 @@ class App extends Component {
 	   				onClick={() => this.handleClick()}
 	   			/>}
 	   		</Frame>
+    	*/
     	)
   	}
 }
