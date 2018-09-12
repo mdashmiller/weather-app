@@ -6,6 +6,22 @@
 	color: #fff;
 }
 
+.day-2 {
+	color: #eee;
+}
+
+.night-2 {
+	color: #f5e44c;
+}
+
+#landing-title {
+	margin: 50px 0 80px;
+}
+
+h1 {
+	font-size: 3em;
+}
+
 h2 {
 	color: #eee;
 }

@@ -24,7 +24,11 @@ class App extends Component {
 		condition: '',
 		name: '',
 		day: true,
-		searchClicked: false
+		searchClicked: false,
+		lat: '',
+		lon: '',
+		noGeoLocation: false,
+		zip: ''
 	}
 
 	// component methods
@@ -92,10 +96,46 @@ class App extends Component {
 		}
 	}
 
+	getLocation = () => {
+		// finds user's latitude and longitude
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(position => 
+				this.setState({
+					lat: position.coords.latitude,
+					lon: position.coords.longitude
+				})
+			)
+		} else {
+			this.setState({ noGeoLocation: true })
+		}
+	}
+
+	/*
+	updateCoords = position =>
+		// sets lat and lon in state
+		// to user's position
+		this.setState({
+			lat: position.coords.latitude,
+			lon: position.coords.longitude
+		})
+
+	geoError = () =>
+		// executes when
+		// getCurrentPosition() fails
+		this.setState({
+			lat: '',
+			lon: ''
+		})
+	*/
+
 	handleClick = () =>
 		// changes the search box
 		// when user clicks in it
-		this.setState({ searchClicked: true })
+		this.setState({ 
+			searchClicked: true,
+			lat: '',
+			lon: '' 
+		})
 
 	/*
 	lookUp = zip => {
@@ -115,7 +155,78 @@ class App extends Component {
 	}
 
   	render() {
-    	return (
+    	if (this.state.lat && this.state.lon) {
+    		return (
+    		 	<Frame>
+    		 		<h1
+    		 			className={`${this.state.day ? 'day' : 'night'}`}
+    		 		>
+    		 			{this.state.name}
+    		 		</h1>
+    				<h2>{this.state.temp} F</h2>
+    				<h3>{this.state.description}</h3>
+    				<WeatherIcon 
+    					id={this.state.condition} 
+    					daytime={this.state.day}
+    				/>
+    				<ThermoIcon temp={this.state.temp} />
+    				<Search
+    					type="text"
+    					placeholder="&#xf3c5;  Change Location"
+    					onClick={() => this.handleClick()}
+    				/>
+    			</Frame>
+    		)
+    	} else {
+    		return (
+				<Frame>
+        			<h1
+        				id="landing-title"
+        				className={`${this.state.day ? 'day' : 'night'}`}
+        			>
+        				Weather
+    	    			<span
+    	    				className={`${this.state.day ? 'day-2' : 'night-2'}`}
+    	    			>
+    	    				Now
+    	    			</span>
+        			</h1>
+        			{this.state.searchClicked
+        				? <div> 
+        					<Search
+        						id="zip"
+        					    type="text"
+        					   	placeholder="Enter US ZIP"
+        					   	autofocus="autofocus"
+        					   	short
+        					/>
+        					<Button
+        					   	//onClick={this.lookUp(document.getElementById('zip').value())}
+        					>
+        					   	Go
+        				 	</Button>
+        				</div>
+        				: <div>
+        					<Search
+        						type="text"
+        						placeholder="Use My Location"
+        						onClick={() => this.getLocation()}
+        						landingPage
+        						userLocation
+        					/>
+        					<Search
+        						placeholder="Lookup by Zipcode"
+        						onClick={() => this.handleClick()}
+        						landingPage
+        						userZip
+        					/>
+        				</div>
+        			}
+        		</Frame> 
+        	)  
+    	}
+    		
+    	/*	
 	    	<Frame>
 	    		<h1
 	    			className={`${this.state.day ? 'day' : 'night'}`}
@@ -150,7 +261,8 @@ class App extends Component {
 	   				onClick={() => this.handleClick()}
 	   			/>}
 	   		</Frame>
-    	)
+    	*/
+    	
   	}
 }
 
