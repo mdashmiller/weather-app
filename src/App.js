@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import config from './config'
 import './App.css'
+import Display from './views/Display'
+import Landing from './views/Landing'
 import Frame from './components/Frame'
-import Search from './components/Search'
 import WeatherIcon from './components/WeatherIcon'
 import ThermoIcon from './components/ThermoIcon'
-import Button from './components/Button'
+import Search from  './components/Search'
+import Button from  './components/Button'
 
 // Open Weather Map API url details
 const lat = '29.6261'
@@ -128,7 +130,7 @@ class App extends Component {
 		})
 	*/
 
-	handleClick = () =>
+	switchToLookup = () =>
 		// changes the search box
 		// when user clicks in it
 		this.setState({ 
@@ -156,113 +158,35 @@ class App extends Component {
 
   	render() {
     	if (this.state.lat && this.state.lon) {
+    		// if user chooses to use their location
+    		// weather info will be retrieved using
+    		// latitude and longitude and the
+    		// Display view will be shown
     		return (
-    		 	<Frame>
-    		 		<h1
-    		 			className={`${this.state.day ? 'day' : 'night'}`}
-    		 		>
-    		 			{this.state.name}
-    		 		</h1>
-    				<h2>{this.state.temp} F</h2>
-    				<h3>{this.state.description}</h3>
-    				<WeatherIcon 
-    					id={this.state.condition} 
-    					daytime={this.state.day}
-    				/>
-    				<ThermoIcon temp={this.state.temp} />
-    				<Search
-    					type="text"
-    					placeholder="&#xf3c5;  Change Location"
-    					onClick={() => this.handleClick()}
-    				/>
-    			</Frame>
+    			<Display
+    				dayOrNight={`${this.state.day ? 'day' : 'night'}`}
+    				place={this.state.name}
+    				temp={this.state.temp}
+    				description={this.state.description}
+    				code={this.state.condition}
+    				switchToLookup={() => this.switchToLookup()}
+    			/>
     		)
     	} else {
     		return (
-				<Frame>
-        			<h1
-        				id="landing-title"
-        				className={`${this.state.day ? 'day' : 'night'}`}
-        			>
-        				Weather
-    	    			<span
-    	    				className={`${this.state.day ? 'day-2' : 'night-2'}`}
-    	    			>
-    	    				Now
-    	    			</span>
-        			</h1>
-        			{this.state.searchClicked
-        				? <div> 
-        					<Search
-        						id="zip"
-        					    type="text"
-        					   	placeholder="Enter US ZIP"
-        					   	autofocus="autofocus"
-        					   	short
-        					/>
-        					<Button
-        					   	//onClick={this.lookUp(document.getElementById('zip').value())}
-        					>
-        					   	Go
-        				 	</Button>
-        				</div>
-        				: <div>
-        					<Search
-        						type="text"
-        						placeholder="Use My Location"
-        						onClick={() => this.getLocation()}
-        						landingPage
-        						userLocation
-        					/>
-        					<Search
-        						placeholder="Lookup by Zipcode"
-        						onClick={() => this.handleClick()}
-        						landingPage
-        						userZip
-        					/>
-        				</div>
-        			}
-        		</Frame> 
+    			// the initial view presented before the user
+    			// has chosen whether to use their current position
+    			// or to lookup weather with a zipcode 
+    			<Landing
+    				dayOrNight={`${this.state.day ? 'day' : 'night'}`}
+    				dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
+    				searchClicked={this.state.searchClicked}
+    				//lookUpByZip={this.lookUp(document.getElementById('zip').value())}
+    				getLocation={() => this.getLocation()}
+    				switchToLookup={() => this.switchToLookup()}
+    			/>
         	)  
     	}
-    		
-    	/*	
-	    	<Frame>
-	    		<h1
-	    			className={`${this.state.day ? 'day' : 'night'}`}
-	    		>
-	    			{this.state.name}
-	    		</h1>
-	   			<h2>{this.state.temp} F</h2>
-	   			<h3>{this.state.description}</h3>
-	   			<WeatherIcon 
-	   				id={this.state.condition} 
-	   				daytime={this.state.day}
-	   			/>
-	   			<ThermoIcon temp={this.state.temp} />
-	   			{this.state.searchClicked
-	   			? <div> 
-		   			<Search
-		   				id="zip"
-		   				type="text"
-		   				placeholder="Enter US ZIP"
-		   				autofocus="autofocus"
-		   				short
-		   			/>
-		   			<Button
-		   				//onClick={this.lookUp(document.getElementById('zip').value())}
-		   			>
-		   			Go
-		   			</Button>
-	   			</div>
-	   			: <Search
-	   				type="text"
-	   				placeholder="&#xf3c5;  Change Location"
-	   				onClick={() => this.handleClick()}
-	   			/>}
-	   		</Frame>
-    	*/
-    	
   	}
 }
 

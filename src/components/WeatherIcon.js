@@ -1,14 +1,14 @@
 import React from 'react'
 import Icon from './Icon'
 
-const WeatherIcon = ({ id, daytime }) => {
+const WeatherIcon = ({ code, dayOrNight }) => {
 	// determines whether to display a
 	// cloud or sun icon dependent upon
 	// weather conditions
 
 	// weather-dependent icon details
 	let celestialBody
-	if (daytime) {
+	if (dayOrNight === 'day') {
 		celestialBody = "fas fa-sun fa-3x"
 	} else {
 		celestialBody = "fas fa-moon fa-3x"
@@ -16,15 +16,15 @@ const WeatherIcon = ({ id, daytime }) => {
 	const cloud = "fas fa-cloud fa-3x"	
 
 	if (
-			(id > 959 && id < 963) ||
-			(id > 899 && id < 903) ||
-			id === 804 ||
-			id === 803 ||
-			(id > 700 && id < 782) ||
-			(id > 599 && id < 623) ||
-			(id > 499 && id < 532) ||
-			(id > 299 && id < 322) ||
-			(id > 199 && id < 233)
+			(code > 959 && code < 963) ||
+			(code > 899 && code < 903) ||
+			code === 804 ||
+			code === 803 ||
+			(code > 700 && code < 782) ||
+			(code > 599 && code < 623) ||
+			(code > 499 && code < 532) ||
+			(code > 299 && code < 322) ||
+			(code > 199 && code < 233)
 	) {
 		return <Icon dark className={cloud}></Icon>
 	}
