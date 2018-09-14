@@ -3,20 +3,15 @@ import config from './config'
 import './App.css'
 import Display from './views/Display'
 import Landing from './views/Landing'
-import Frame from './components/Frame'
-import WeatherIcon from './components/WeatherIcon'
-import ThermoIcon from './components/ThermoIcon'
-import Search from  './components/Search'
-import Button from  './components/Button'
 
 // Open Weather Map API url details
-const lat = '29.6261'
-const lon = '-95.7316'
+//const lat = '29.6261'
+//const lon = '-95.7316'
 const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
-const COORDS = `lat=${lat}&lon=${lon}`
+//const COORDS = `lat=${lat}&lon=${lon}`
 const KEY = config.key
 
-const url = `${PATH_BASE}${COORDS}&APPID=${KEY}`
+//const url = `${PATH_BASE}${COORDS}&APPID=${KEY}`
 
 class App extends Component {
 
@@ -88,7 +83,7 @@ class App extends Component {
 		this.setColors()
 	}
 
-	setColors = () => {
+	setBackground = () => {
 		// changes color of background dependent
 		// upon time of day
 		if (this.state.day) {
@@ -102,15 +97,50 @@ class App extends Component {
 		// finds user's latitude and longitude
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(position => 
+				/*
 				this.setState({
 					lat: position.coords.latitude,
 					lon: position.coords.longitude
 				})
+				*/
+				this.setCoords(position)
 			)
+			//this.getWeather()
 		} else {
 			this.setState({ noGeoLocation: true })
 		}
 	}
+
+	setCoords = (position, getWeather) => {
+		this.setState({
+			lat: position.coords.latitude,
+			lon: position.coords.longitude
+		})
+		this.getWeather()
+	}
+		
+
+
+	getWeather = () => {
+		if (this.state.lat && this.state.lon) {
+			// lookup weather with coordinates
+			const COORDS = `lat=${this.state.lat}&lon=${this.state.lon}`
+			const urlCoords = `${PATH_BASE}${COORDS}&APPID=${KEY}`
+			fetch(urlCoords)
+				.then(response => response.json())
+				.then(result => this.setDisplay(result))
+				.catch(error => error)
+		} else if (this.state.zip) {
+			// lookup weather with zipcode
+			const ZIP = `zip=${this.state.zip}`
+			const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
+			fetch(urlZip)
+				.then(response => response.json())
+				.then(result => this.setDisplay(result))
+				.catch(error => error)
+		}
+	}
+	
 
 	/*
 	updateCoords = position =>
@@ -136,7 +166,8 @@ class App extends Component {
 		this.setState({ 
 			searchClicked: true,
 			lat: '',
-			lon: '' 
+			lon: '' ,
+			zip: ''
 		})
 
 	/*
@@ -149,14 +180,31 @@ class App extends Component {
 
 	// lifecycle methods
 
+	/*
 	componentDidMount() {
-		fetch(url)
-			.then(response => response.json())
-			.then(result => this.setDisplay(result))
-			.catch(error => error)
+		if (this.state.lat && this.state.lon) {
+			// lookup weather with coordinates
+			const COORDS = `lat=${this.state.lat}&lon=${this.state.lon}`
+			const urlCoords = `${PATH_BASE}${COORDS}&APPID=${KEY}`
+			fetch(urlCoords)
+				.then(response => response.json())
+				.then(result => this.setDisplay(result))
+				.catch(error => error)
+		} else if (this.state.zip) {
+			// lookup weather with zipcode
+			const ZIP = `zip=${this.state.zip}`
+			const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
+			fetch(urlZip)
+				.then(response => response.json())
+				.then(result => this.setDisplay(result))
+				.catch(error => error)
+		}	
 	}
+	*/
 
   	render() {
+  		console.log(this.state.lat)
+  		this.setBackground()             
     	if (this.state.lat && this.state.lon) {
     		// if user chooses to use their location
     		// weather info will be retrieved using

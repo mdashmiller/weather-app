@@ -8,7 +8,7 @@ const Lookup = (/*{ lookUpByZip }*/) =>
 			id="zip"
 			type="text"
 			placeholder="Enter US ZIP"
-			autofocus="autofocus"
+			autoFocus="autofocus"
 			short
 		/>
 		<Button

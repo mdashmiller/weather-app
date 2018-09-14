@@ -1,7 +1,6 @@
 import React from 'react'
 import Frame from '../components/Frame'
 import Search from '../components/Search'
-import Button from '../components/Button'
 import Lookup from './Lookup'
 
 const Landing = ({
