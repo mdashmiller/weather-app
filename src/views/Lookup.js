@@ -2,7 +2,7 @@ import React from 'react'
 import Search from '../components/Search'
 import Button from '../components/Button'
 
-const Lookup = (/*{ lookUpByZip }*/) =>
+const Lookup = ({ lookUpByZip }) =>
 	<div> 
 		<Search
 			id="zip"
@@ -12,7 +12,7 @@ const Lookup = (/*{ lookUpByZip }*/) =>
 			short
 		/>
 		<Button
-			//onClick={lookUpByZip}
+			onClick={lookUpByZip}
 		>
 			Go
 		</Button>

@@ -7,7 +7,7 @@ const Landing = ({
 	dayOrNight,
 	dayOrNight2,
 	searchClicked,
-	//lookUpByZip,
+	lookUpByZip,
 	getLocation,
 	switchToLookup
 }) =>
@@ -27,7 +27,7 @@ const Landing = ({
         	// if user clicks the look up by zipcode
         	// option, show the Lookup view, else
         	// show the standard landing view
-        	? <Lookup /*lookUpByZip={lookUpByZip}*/ />
+        	? <Lookup lookUpByZip={lookUpByZip} />
         	: <div>
         		<Search
         			type="text"
