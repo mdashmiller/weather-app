@@ -145,10 +145,15 @@ class App extends Component {
 			zip: ''
 		})
 
-	lookUp = zip => {
-		// lookup weather data
-		// according to user-entered zipcode
-		this.setState({ searchClicked: false })
+	lookUp = e => {
+		// lookup weather data according 
+		// to user-entered zipcode and 
+		// call getWeather()
+		this.setState({
+			zip: e.target.value,
+			searchClicked: false
+		})
+		this.getWeather()
 	}
 
   	render() {
@@ -174,7 +179,7 @@ class App extends Component {
   					dayOrNight={`${this.state.day ? 'day' : 'night'}`}
   					dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
   					searchClicked={this.state.searchClicked}
-  					lookUpByZip={() => this.lookUp(/*document.getElementById('zip').value()*/)}
+  					lookUpByZip={e => this.lookup(e)}
   					getLocation={() => this.getLocation()}
   					switchToLookup={() => this.switchToLookup()}
   				/>
