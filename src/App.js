@@ -109,6 +109,7 @@ class App extends Component {
 	}
 		
 	getWeather = () => {
+		this.setState({ searchClicked: false })
 		if (this.state.lat && this.state.lon) {
 			// lookup weather with coordinates
 			const COORDS = `lat=${this.state.lat}&lon=${this.state.lon}`
@@ -145,18 +146,13 @@ class App extends Component {
 			zip: ''
 		})
 
-	lookUp = e => {
-		// lookup weather data according 
-		// to user-entered zipcode and 
-		// call getWeather()
-		this.setState({
-			zip: e.target.value,
-			searchClicked: false
-		})
-		this.getWeather()
-	}
+	setZip = e => 
+		// updates this.state.zip according
+		// to user input
+		this.setState({ zip: e.target.value })
 
   	render() {
+  		console.log(`zip is ${this.state.zip} searchClicked? ${this.state.searchClicked}`)
   		if (this.state.temp) {
   			// if weather info has been returned from
   			// API call, show it to the user
@@ -179,7 +175,8 @@ class App extends Component {
   					dayOrNight={`${this.state.day ? 'day' : 'night'}`}
   					dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
   					searchClicked={this.state.searchClicked}
-  					lookUpByZip={e => this.lookup(e)}
+  					handleZip={e => this.setZip(e)}
+  					getWeather={() => this.getWeather()}
   					getLocation={() => this.getLocation()}
   					switchToLookup={() => this.switchToLookup()}
   				/>
