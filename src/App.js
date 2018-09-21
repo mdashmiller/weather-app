@@ -3,20 +3,10 @@ import config from './config'
 import './App.css'
 import Display from './views/Display'
 import Landing from './views/Landing'
-import Frame from './components/Frame'
-import WeatherIcon from './components/WeatherIcon'
-import ThermoIcon from './components/ThermoIcon'
-import Search from  './components/Search'
-import Button from  './components/Button'
 
 // Open Weather Map API url details
-const lat = '29.6261'
-const lon = '-95.7316'
 const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
-const COORDS = `lat=${lat}&lon=${lon}`
 const KEY = config.key
-
-const url = `${PATH_BASE}${COORDS}&APPID=${KEY}`
 
 class App extends Component {
 
@@ -35,7 +25,7 @@ class App extends Component {
 
 	// component methods
 
-	setDisplay = result => {
+	setWeatherInfo = result => {
 		// takes results from API call and
 		// routes data to the proper channels
 		this.setTemp(result.main.temp)
@@ -84,11 +74,10 @@ class App extends Component {
 		} else {
 			this.setState({ day: false })
 		}
-
-		this.setColors()
+		this.setBackground()
 	}
 
-	setColors = () => {
+	setBackground = () => {
 		// changes color of background dependent
 		// upon time of day
 		if (this.state.day) {
@@ -102,91 +91,97 @@ class App extends Component {
 		// finds user's latitude and longitude
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(position => 
-				this.setState({
-					lat: position.coords.latitude,
-					lon: position.coords.longitude
-				})
+				this.setCoords(position)
 			)
 		} else {
 			this.setState({ noGeoLocation: true })
 		}
 	}
 
-	/*
-	updateCoords = position =>
-		// sets lat and lon in state
-		// to user's position
+	setCoords = position => {
+		// sets users lattitude and longitude  
+		// in state and initiates API call
 		this.setState({
 			lat: position.coords.latitude,
 			lon: position.coords.longitude
 		})
-
-	geoError = () =>
-		// executes when
-		// getCurrentPosition() fails
-		this.setState({
-			lat: '',
-			lon: ''
-		})
-	*/
-
+		this.getWeather()
+	}
+		
+	getWeather = () => {
+		this.setState({ searchClicked: false })
+		if (this.state.lat && this.state.lon) {
+			// lookup weather with coordinates
+			const COORDS = `lat=${this.state.lat}&lon=${this.state.lon}`
+			const urlCoords = `${PATH_BASE}${COORDS}&APPID=${KEY}`
+			fetch(urlCoords)
+				.then(response => response.json())
+				.then(result => this.setWeatherInfo(result))
+				.catch(error => error)
+		} else if (this.state.zip) {
+			// lookup weather with zipcode
+			const ZIP = `zip=${this.state.zip}`
+			const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
+			fetch(urlZip)
+				.then(response => response.json())
+				.then(result => this.setWeatherInfo(result))
+				.catch(error => error)
+		}
+	}
+	
 	switchToLookup = () =>
-		// changes the search box
-		// when user clicks in it
+		// triggers a change from Landing view
+		// to Lookup view when user clicks
+		// in the Search box
 		this.setState({ 
+			temp: '',
+			description: '',
+			condition: '',
+			name: '',
+			day: true,
 			searchClicked: true,
 			lat: '',
-			lon: '' 
+			lon: '',
+			noGeoLocation: false,
+			zip: ''
 		})
 
-	/*
-	lookUp = zip => {
-		// lookup weather data
-		// according to user-entered zipcode
-
-	}
-	*/
-
-	// lifecycle methods
-
-	componentDidMount() {
-		fetch(url)
-			.then(response => response.json())
-			.then(result => this.setDisplay(result))
-			.catch(error => error)
-	}
+	setZip = e => 
+		// updates this.state.zip according
+		// to user input
+		this.setState({ zip: e.target.value })
 
   	render() {
-    	if (this.state.lat && this.state.lon) {
-    		// if user chooses to use their location
-    		// weather info will be retrieved using
-    		// latitude and longitude and the
-    		// Display view will be shown
-    		return (
-    			<Display
-    				dayOrNight={`${this.state.day ? 'day' : 'night'}`}
-    				place={this.state.name}
-    				temp={this.state.temp}
-    				description={this.state.description}
-    				code={this.state.condition}
-    				switchToLookup={() => this.switchToLookup()}
-    			/>
-    		)
-    	} else {
-    		return (
-    			// the initial view presented before the user
-    			// has chosen whether to use their current position
-    			// or to lookup weather with a zipcode 
-    			<Landing
-    				dayOrNight={`${this.state.day ? 'day' : 'night'}`}
-    				dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
-    				searchClicked={this.state.searchClicked}
-    				//lookUpByZip={this.lookUp(document.getElementById('zip').value())}
-    				getLocation={() => this.getLocation()}
-    				switchToLookup={() => this.switchToLookup()}
-    			/>
-        	)  
-    	}
+  		console.log(`zip is ${this.state.zip} searchClicked? ${this.state.searchClicked}`)
+  		if (this.state.temp) {
+  			// if weather info has been returned from
+  			// API call, show it to the user
+  			return (
+  				<Display
+  					dayOrNight={`${this.state.day ? 'day' : 'night'}`}
+  					place={this.state.name}
+  					temp={this.state.temp}
+  					description={this.state.description}
+  					code={this.state.condition}
+  					switchToLookup={() => this.switchToLookup()}
+  				/>
+  			)
+  		} else {
+  			return (
+  				// the initial view presented before the user
+  				// has chosen whether to use their current position
+  				// or to lookup weather with a zipcode 
+  				<Landing
+  					dayOrNight={`${this.state.day ? 'day' : 'night'}`}
+  					dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
+  					searchClicked={this.state.searchClicked}
+  					handleZip={e => this.setZip(e)}
+  					getWeather={() => this.getWeather()}
+  					getLocation={() => this.getLocation()}
+  					switchToLookup={() => this.switchToLookup()}
+  				/>
+  			)
+  		}
   	}
 }
 

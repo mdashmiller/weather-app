@@ -2,17 +2,22 @@ import React from 'react'
 import Search from '../components/Search'
 import Button from '../components/Button'
 
-const Lookup = (/*{ lookUpByZip }*/) =>
+const Lookup = ({
+	handleZip, 
+	getWeather
+}) =>
+	
 	<div> 
 		<Search
 			id="zip"
 			type="text"
 			placeholder="Enter US ZIP"
-			autofocus="autofocus"
+			autoFocus="autofocus"
 			short
+			onChange={handleZip}
 		/>
 		<Button
-			//onClick={lookUpByZip}
+			onClick={getWeather}
 		>
 			Go
 		</Button>

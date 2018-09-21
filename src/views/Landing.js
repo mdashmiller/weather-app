@@ -1,14 +1,14 @@
 import React from 'react'
 import Frame from '../components/Frame'
 import Search from '../components/Search'
-import Button from '../components/Button'
 import Lookup from './Lookup'
 
 const Landing = ({
 	dayOrNight,
 	dayOrNight2,
 	searchClicked,
-	//lookUpByZip,
+	getWeather,
+	handleZip,
 	getLocation,
 	switchToLookup
 }) =>
@@ -28,7 +28,10 @@ const Landing = ({
         	// if user clicks the look up by zipcode
         	// option, show the Lookup view, else
         	// show the standard landing view
-        	? <Lookup /*lookUpByZip={lookUpByZip}*/ />
+        	? <Lookup 
+        		getWeather={getWeather}
+        		handleZip={handleZip}
+        	/>
         	: <div>
         		<Search
         			type="text"
