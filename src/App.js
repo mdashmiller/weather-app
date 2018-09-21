@@ -129,7 +129,7 @@ class App extends Component {
 		}
 	}
 	
-	switchToLookup = () =>
+	switchToLookup = () => {
 		// triggers a change from Landing view
 		// to Lookup view when user clicks
 		// in the Search box
@@ -138,14 +138,21 @@ class App extends Component {
 			description: '',
 			condition: '',
 			name: '',
-			day: true,
+			//day: true,
 			searchClicked: true,
 			lat: '',
 			lon: '',
 			noGeoLocation: false,
 			zip: ''
 		})
+		this.resetBackground()
+	}
 
+	resetBackground = () =>
+		// resets background to Landing view
+		// color for Lookup view
+		document.body.style = 'background: #69656f;'	
+		
 	setZip = e => 
 		// updates this.state.zip according
 		// to user input
