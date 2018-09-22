@@ -33,6 +33,7 @@ class App extends Component {
 		this.setName(result.name)
 		this.setCondition(result.weather[0].id)
 		this.dayOrNight(result.dt, result.sys.sunrise, result.sys.sunset)
+		this.setState({ searchClicked: false })
 	}
 
 	setTemp = tempK => {
@@ -109,7 +110,6 @@ class App extends Component {
 	}
 		
 	getWeather = () => {
-		this.setState({ searchClicked: false })
 		if (this.state.lat && this.state.lon) {
 			// lookup weather with coordinates
 			const COORDS = `lat=${this.state.lat}&lon=${this.state.lon}`
