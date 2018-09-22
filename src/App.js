@@ -138,7 +138,7 @@ class App extends Component {
 			description: '',
 			condition: '',
 			name: '',
-			//day: true,
+			day: true,
 			searchClicked: true,
 			lat: '',
 			lon: '',
@@ -159,7 +159,6 @@ class App extends Component {
 		this.setState({ zip: e.target.value })
 
   	render() {
-  		console.log(`zip is ${this.state.zip} searchClicked? ${this.state.searchClicked}`)
   		if (this.state.temp) {
   			// if weather info has been returned from
   			// API call, show it to the user

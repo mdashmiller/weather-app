@@ -5,9 +5,9 @@ const Button = styled.button`
     width: 50px;
     margin-left: 8px;
     border-radius: 4px;
-    border: 2px solid #c3c3c3;
-    color: #c3c3c3;
-    background: #4c7d98;
+    border: 2px solid #eee;
+    color: #eee;
+    background: #69656f;
     padding: 0;
     font-size: 18px;
     font-family: inherit;
@@ -15,8 +15,7 @@ const Button = styled.button`
     cursor: pointer;
 
     	&:hover {
-    		background: #c3c3c3;
-    		color: #4c7d98;
+    		background: #f46403;
     		border: none;
     		outline: none;
     	} 
