@@ -16,6 +16,12 @@ const Search = styled.input`
 		color: #6a6a6a;
 	}
 
+	${props => props.lookUp && css`
+	    @media (max-width: 340px) {
+	        margin: 120px auto 20px;
+	      }
+	  `}
+
 	${props => props.short && css`
 	    width: 114px;
 	    padding-left: 5px;
@@ -33,6 +39,7 @@ const Search = styled.input`
 
 	${props => props.userLocation && css`
 		border: 3px solid #f46403;
+		caret-color: transparent;
 			
 			&:hover {
 				background: #f46403;
@@ -45,9 +52,11 @@ const Search = styled.input`
 
 	${props => props.userZip && css`
 		border: 3px solid #6a6a6a;
+		caret-color: transparent;
 
 			&:hover {
-				background: #6a6a6a;
+				background: #69656f;
+				border: 3px solid #eee;
 				
 				&::placeholder {
 					color: #eee;

@@ -129,7 +129,7 @@ class App extends Component {
 		}
 	}
 	
-	switchToLookup = () =>
+	switchToLookup = () => {
 		// triggers a change from Landing view
 		// to Lookup view when user clicks
 		// in the Search box
@@ -145,14 +145,20 @@ class App extends Component {
 			noGeoLocation: false,
 			zip: ''
 		})
+		this.resetBackground()
+	}
 
+	resetBackground = () =>
+		// resets background to Landing view
+		// color for Lookup view
+		document.body.style = 'background: #69656f;'	
+		
 	setZip = e => 
 		// updates this.state.zip according
 		// to user input
 		this.setState({ zip: e.target.value })
 
   	render() {
-  		console.log(`zip is ${this.state.zip} searchClicked? ${this.state.searchClicked}`)
   		if (this.state.temp) {
   			// if weather info has been returned from
   			// API call, show it to the user

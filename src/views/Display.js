@@ -29,6 +29,7 @@ const Display = ({
 			type="text"
 			placeholder="&#xf3c5;  Change Location"
 			onClick={switchToLookup}
+			lookUp
 		/>
 	</Frame>
 
