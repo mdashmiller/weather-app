@@ -10,7 +10,9 @@ const Display = ({
 	temp,
 	description,
 	code,
-	switchToLookup
+	switchToLookup,
+	getLocation,
+	userLocClicked
 }) =>
  	<Frame>
  		<h1
@@ -31,6 +33,18 @@ const Display = ({
 			onClick={switchToLookup}
 			lookUp
 		/>
+		{userLocClicked
+			// don't display the 'use my location'
+			// option if the user has just clicked it
+			? null
+			: <Search
+				type="text"
+				placeholder="Use My Location"
+				onClick={getLocation}
+				landingPage
+				userLocation
+			/>
+		}
 	</Frame>
 
 export default Display
