@@ -20,7 +20,8 @@ class App extends Component {
 		lat: '',
 		lon: '',
 		noGeoLocation: false,
-		zip: ''
+		zip: '',
+		userLocClicked: false
 	}
 
 	// component methods
@@ -91,9 +92,10 @@ class App extends Component {
 	getLocation = () => {
 		// finds user's latitude and longitude
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(position => 
+			navigator.geolocation.getCurrentPosition(position => {
 				this.setCoords(position)
-			)
+				this.setState({ userLocClicked: true })
+			})
 		} else {
 			this.setState({ noGeoLocation: true })
 		}
@@ -143,7 +145,8 @@ class App extends Component {
 			lat: '',
 			lon: '',
 			noGeoLocation: false,
-			zip: ''
+			zip: '',
+			userLocClicked: false
 		})
 		this.resetBackground()
 	}
@@ -170,6 +173,8 @@ class App extends Component {
   					description={this.state.description}
   					code={this.state.condition}
   					switchToLookup={() => this.switchToLookup()}
+  					getLocation={() => this.getLocation()}
+  					userLocClicked={this.state.userLocClicked}
   				/>
   			)
   		} else {
