@@ -7,7 +7,7 @@ const Search = styled.input`
 	margin: 200px auto 20px;
 	width: 200px;
 	height: 34px;
-	padding-left: 8px;
+	padding-left: 10px;
 	font-family: 'Font Awesome 5 Free', 'Varela Round', Arial, sans-serif;
 	font-weight: 900;
 	font-size: 18px;
@@ -17,8 +17,8 @@ const Search = styled.input`
 	}
 
 	${props => props.lookUp && css`
-	    @media (max-width: 340px) {
-	        margin: 120px auto 20px;
+	    @media (max-width: 380px) {
+	        margin: 80px auto 20px;
 	      }
 	  `}
 
@@ -32,9 +32,16 @@ const Search = styled.input`
 		display: block;
 	    width: 172px;
 	   	margin: 26px auto;
-		text-align: center;
-		padding: 0;
+		text-align: left;
+		padding-left: 4px;
 		cursor: pointer;  
+	  `}
+
+	${props => props.displayPage && css`
+	    display: block;
+	    width: 200px;
+	   	margin: 0 auto;
+	   	cursor: pointer; 
 	  `}
 
 	${props => props.userLocation && css`

@@ -35,13 +35,13 @@ const Landing = ({
         	: <div>
         		<Search
         			type="text"
-        			placeholder="Use My Location"
+        			placeholder="&#xf3c5;  Use My Location"
         			onClick={getLocation}
         			landingPage
         			userLocation
         		/>
         		<Search
-        			placeholder="Lookup by Zipcode"
+        			placeholder="&#xf002;  Lookup by Zip"
         			onClick={switchToLookup}
         			landingPage
         			userZip
