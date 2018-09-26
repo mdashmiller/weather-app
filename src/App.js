@@ -161,6 +161,30 @@ class App extends Component {
 		// to user input
 		this.setState({ zip: e.target.value })
 
+	limitInputChars = e => {
+		// allows user to input a max
+		// of five chars for zipcode
+		const numOfChars = e.target.value.length
+		// backspace, left, right, enter, tab, 
+		// home, end, and return keys can
+		// be used regardless of number
+		// of chars enterd
+		switch (e.keyCode) {
+			case 8:
+			case 37:
+			case 39:
+			case 13:
+			case 9:
+			case 36:
+			case 35:
+				return
+			default:
+				if (numOfChars === 5) {
+					e.preventDefault()
+				}
+		}
+	}
+
   	render() {
   		if (this.state.temp) {
   			// if weather info has been returned from
@@ -187,6 +211,7 @@ class App extends Component {
   					dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
   					searchClicked={this.state.searchClicked}
   					handleZip={e => this.setZip(e)}
+  					limitInputChars={e => this.limitInputChars(e)}
   					getWeather={() => this.getWeather()}
   					getLocation={() => this.getLocation()}
   					switchToLookup={() => this.switchToLookup()}

@@ -9,6 +9,7 @@ const Landing = ({
 	searchClicked,
 	getWeather,
 	handleZip,
+	limitInputChars,
 	getLocation,
 	switchToLookup
 }) =>
@@ -31,6 +32,7 @@ const Landing = ({
         	? <Lookup 
         		getWeather={getWeather}
         		handleZip={handleZip}
+        		limitInputChars={limitInputChars}
         	/>
         	: <div>
         		<Search

@@ -3,7 +3,8 @@ import Search from '../components/Search'
 import Button from '../components/Button'
 
 const Lookup = ({
-	handleZip, 
+	handleZip,
+	limitInputChars, 
 	getWeather
 }) =>
 	
@@ -15,6 +16,7 @@ const Lookup = ({
 			autoFocus="autofocus"
 			short
 			onChange={handleZip}
+			onKeyPress={limitInputChars}
 		/>
 		<Button
 			onClick={getWeather}
