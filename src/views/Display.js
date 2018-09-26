@@ -29,7 +29,7 @@ const Display = ({
 		<ThermoIcon temp={temp} />
 		<Search
 			type="text"
-			placeholder="&#xf3c5;  Change Location"
+			placeholder="&#xf002; Change Location"
 			onClick={switchToLookup}
 			lookUp
 		/>
@@ -39,9 +39,9 @@ const Display = ({
 			? null
 			: <Search
 				type="text"
-				placeholder="Use My Location"
+				placeholder="&#xf3c5;  Use My Location"
 				onClick={getLocation}
-				landingPage
+				displayPage
 				userLocation
 			/>
 		}
