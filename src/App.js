@@ -162,26 +162,35 @@ class App extends Component {
 		this.setState({ zip: e.target.value })
 
 	limitInputChars = e => {
-		// allows user to input a max
-		// of five chars for zipcode
-		const numOfChars = e.target.value.length
-		// backspace, left, right, enter, tab, 
-		// home, end, and return keys can
-		// be used regardless of number
-		// of chars enterd
-		switch (e.keyCode) {
-			case 8:
-			case 37:
-			case 39:
-			case 13:
-			case 9:
-			case 36:
-			case 35:
+		// limits the quantity and quality of
+		// chars the user can enter in zipcode input
+		const numOfChars = e.target.value.length	
+		const char = e.key || e.keyCode
+		// allows a max of 5 chars
+		if (numOfChars < 5) {
+			// input will only accept [0 - 9]
+			if (char >= 48 && char <= 57) {
 				return
-			default:
-				if (numOfChars === 5) {
-					e.preventDefault()
-				}
+			} else if (char >= 0 && char <= 9) {
+				return
+			} else {
+				e.preventDefault()
+			}
+		} else {
+			// backspace, left, right, enter, tab, home, end, 
+			// and return keys can be used regardless of 
+			// number of chars enterd
+			if (char === 8 || char === 'Backspace'
+				|| char === 37 || char === 'ArrowLeft' || char === 'Left'
+				|| char === 39 || char === 'ArrowRight' || char === 'Right'
+				|| char === 13 || char === 'Enter'
+				|| char === 9 || char === 'Tab'
+				|| char === 36 || char === 'Home'
+				|| char === 35 || char === 'End') {
+				return
+			} else {
+				e.preventDefault()
+			}
 		}
 	}
 
