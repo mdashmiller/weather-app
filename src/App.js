@@ -161,11 +161,16 @@ class App extends Component {
 		// to user input
 		this.setState({ zip: e.target.value })
 
-	limitInputChars = e => {
-		// limits the quantity and quality of
-		// chars the user can enter in zipcode input
+	handleKeyPress = e => {
+		// handles user keypresses in the lookup
+		// by zipcode input and limits the quantity 
+		// and quality of chars the user can enter
 		const numOfChars = e.target.value.length	
 		const char = e.key || e.keyCode
+		// submit with enter key
+		if (char === 13 || char === 'Enter' ) {
+			this.getWeather()
+		}
 		// allows a max of 5 chars
 		if (numOfChars < 5) {
 			// input will only accept [0 - 9]
@@ -220,7 +225,7 @@ class App extends Component {
   					dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
   					searchClicked={this.state.searchClicked}
   					handleZip={e => this.setZip(e)}
-  					limitInputChars={e => this.limitInputChars(e)}
+  					handleKeyPress={e => this.handleKeyPress(e)}
   					getWeather={() => this.getWeather()}
   					getLocation={() => this.getLocation()}
   					switchToLookup={() => this.switchToLookup()}
