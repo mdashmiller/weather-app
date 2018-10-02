@@ -5,7 +5,8 @@ import Button from '../components/Button'
 const Lookup = ({
 	handleZip,
 	handleKeyPress, 
-	getWeather
+	getWeather,
+	error
 }) =>
 	
 	<div> 
@@ -23,6 +24,9 @@ const Lookup = ({
 		>
 			Go
 		</Button>
+		{	error &&
+			<p>You gots an erra. Try again?</p>
+		}
 	</div>
 
 export default Lookup

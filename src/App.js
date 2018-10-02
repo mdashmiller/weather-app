@@ -21,7 +21,8 @@ class App extends Component {
 		lon: '',
 		noGeoLocation: false,
 		zip: '',
-		userLocClicked: false
+		userLocClicked: false,
+		error: null
 	}
 
 	// component methods
@@ -127,7 +128,7 @@ class App extends Component {
 			fetch(urlZip)
 				.then(response => response.json())
 				.then(result => this.setWeatherInfo(result))
-				.catch(error => error)
+				.catch(error => this.setState({ error }))
 		}
 	}
 	
@@ -146,7 +147,8 @@ class App extends Component {
 			lon: '',
 			noGeoLocation: false,
 			zip: '',
-			userLocClicked: false
+			userLocClicked: false,
+			error: null
 		})
 		this.resetBackground()
 	}
@@ -229,6 +231,7 @@ class App extends Component {
   					getWeather={() => this.getWeather()}
   					getLocation={() => this.getLocation()}
   					switchToLookup={() => this.switchToLookup()}
+  					error={this.state.error}
   				/>
   			)
   		}
