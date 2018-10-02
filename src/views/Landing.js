@@ -11,7 +11,8 @@ const Landing = ({
 	handleZip,
 	handleKeyPress,
 	getLocation,
-	switchToLookup
+	switchToLookup,
+	error
 }) =>
 	<Frame>
         <h1
@@ -33,6 +34,7 @@ const Landing = ({
         		getWeather={getWeather}
         		handleZip={handleZip}
         		handleKeyPress={handleKeyPress}
+        		error={error}
         	/>
         	: <div>
         		<Search

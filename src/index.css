@@ -30,6 +30,16 @@ h2 {
 	color: #eee;
 }
 
+#error {
+	margin-top: 24px;
+	text-align: left;
+}
+
+#error-box {
+	border: 3px solid #f46403 !important;
+	color: #f46403;
+}
+
 h3 {
 	color: #c3c3c3;
 }
