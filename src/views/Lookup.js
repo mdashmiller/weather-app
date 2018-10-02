@@ -11,13 +11,13 @@ const Lookup = ({
 	
 	<div> 
 		<Search
-			id="zip"
 			type="text"
 			placeholder="Enter US ZIP"
 			autoFocus="autofocus"
 			short
 			onChange={handleZip}
 			onKeyPress={handleKeyPress}
+			id={error && 'error-box'}
 		/>
 		<Button
 			onClick={getWeather}
@@ -25,7 +25,7 @@ const Lookup = ({
 			Go
 		</Button>
 		{	error &&
-			<p>You gots an erra. Try again?</p>
+			<h2 id="error">Hm, that doesn't seem to be a valid US zip. Try again?</h2>
 		}
 	</div>
 
