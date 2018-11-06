@@ -28,12 +28,5 @@ describe('<Lookup />', () => {
 	    wrapper.find(Button).simulate('click')
 	    expect(onButtonClick).to.have.property('callCount', 1)
 	  })
-/*
-	it('handles changes', () => {
-		const onChange = spy()
-		const wrapper = shallow(<Lookup onChange={onChange} />)
-		wrapper.find(Search).simulate('change', {target: {value: 'Your new Value'}})
-		expect(wrapper.state('mirror')).toBe('Your new Value')
-	})
-*/
+
 })
