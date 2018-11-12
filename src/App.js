@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import config from './config'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import './App.css'
-import Display from './views/Display'
 import Landing from './views/Landing'
+import WeatherByGeoloc from './views/WeatherByGeoloc'
+import WeatherByZip from './views/WeatherByZip'
+import Lookup from './views/Lookup'
 
 // Open Weather Map API url details
 const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
@@ -202,39 +205,52 @@ class App extends Component {
 	}
 
   	render() {
-  		if (this.state.temp) {
-  			// if weather info has been returned from
-  			// API call, show it to the user
-  			return (
-  				<Display
-  					dayOrNight={`${this.state.day ? 'day' : 'night'}`}
-  					place={this.state.name}
-  					temp={this.state.temp}
-  					description={this.state.description}
-  					code={this.state.condition}
-  					switchToLookup={() => this.switchToLookup()}
-  					getLocation={() => this.getLocation()}
-  					userLocClicked={this.state.userLocClicked}
-  				/>
-  			)
-  		} else {
-  			return (
-  				// the initial view presented before the user
-  				// has chosen whether to use their current position
-  				// or to lookup weather with a zipcode 
-  				<Landing
-  					dayOrNight={`${this.state.day ? 'day' : 'night'}`}
-  					dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
-  					searchClicked={this.state.searchClicked}
-  					handleZip={e => this.setZip(e)}
-  					handleKeyPress={e => this.handleKeyPress(e)}
-  					getWeather={() => this.getWeather()}
-  					getLocation={() => this.getLocation()}
-  					switchToLookup={() => this.switchToLookup()}
-  					error={this.state.error}
-  				/>
-  			)
-  		}
+  		return (
+  			<BrowserRouter>
+  				<Switch>
+  					<Route exact path='/' component={Landing} />
+  					<Route path='/weather-by-geoloc' component={WeatherByGeoloc} />
+  					<Route path='/lookup' component={Lookup} />
+  					<Route path='/weather-by-zip' component={WeatherByZip} />
+  				</Switch>
+  			</BrowserRouter>
+  		)
+  		
+
+
+  		// if (this.state.temp) {
+  		// 	// if weather info has been returned from
+  		// 	// API call, show it to the user
+  		// 	return (
+  		// 		<Display
+  		// 			dayOrNight={`${this.state.day ? 'day' : 'night'}`}
+  		// 			place={this.state.name}
+  		// 			temp={this.state.temp}
+  		// 			description={this.state.description}
+  		// 			code={this.state.condition}
+  		// 			switchToLookup={() => this.switchToLookup()}
+  		// 			getLocation={() => this.getLocation()}
+  		// 			userLocClicked={this.state.userLocClicked}
+  		// 		/>
+  		// 	)
+  		// } else {
+  		// 	return (
+  		// 		// the initial view presented before the user
+  		// 		// has chosen whether to use their current position
+  		// 		// or to lookup weather with a zipcode 
+  		// 		<Landing
+  		// 			dayOrNight={`${this.state.day ? 'day' : 'night'}`}
+  		// 			dayOrNight2={`${this.state.day ? 'day-2' : 'night-2'}`}
+  		// 			searchClicked={this.state.searchClicked}
+  		// 			handleZip={e => this.setZip(e)}
+  		// 			handleKeyPress={e => this.handleKeyPress(e)}
+  		// 			getWeather={() => this.getWeather()}
+  		// 			getLocation={() => this.getLocation()}
+  		// 			switchToLookup={() => this.switchToLookup()}
+  		// 			error={this.state.error}
+  		// 		/>
+  		// 	)
+  		// }
   	}
 }
 

@@ -1,32 +1,34 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import Search from '../components/Search'
 import Button from '../components/Button'
 
-const Lookup = ({
-	handleZip,
-	handleKeyPress, 
-	getWeather,
-	error
-}) =>
+const Lookup = () => 
+	<h1>Lookup weather by zip!!!</h1>
+
+// const Lookup = ({
+// 	handleZip,
+// 	handleKeyPress, 
+// 	getWeather,
+// 	error
+// }) =>
 	
-	<div> 
-		<Search
-			type="text"
-			placeholder="Enter US ZIP"
-			autoFocus="autofocus"
-			short
-			onChange={handleZip}
-			onKeyPress={handleKeyPress}
-			id={error && 'error-box'}
-		/>
-		<Button
-			onClick={getWeather}
-		>
-			Go
-		</Button>
-		{	error &&
-			<h2 id="error">Hm, that doesn't seem to be a valid US zip. Try again?</h2>
-		}
-	</div>
+// 	<div> 
+// 		<Search
+// 			type="text"
+// 			placeholder="Enter US ZIP"
+// 			autoFocus="autofocus"
+// 			short
+// 			onChange={handleZip}
+// 			onKeyPress={handleKeyPress}
+// 			id={error && 'error-box'}
+// 		/>
+// 		<Button
+// 			onClick={getWeather}
+// 		>
+// 			Go
+// 		</Button>
+		
+// 	</div>
 
 export default Lookup
