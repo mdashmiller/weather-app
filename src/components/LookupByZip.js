@@ -14,12 +14,8 @@ class LookupByZip extends Component {
 
 	state = {
 		zip: '',
-		error: null,
-		day: true,
-		place: '',
-		temp: '',
-		description: '', 
-		codition: ''
+		result: null,
+		error: null
 	}
 
 	// component methods
@@ -68,77 +64,21 @@ class LookupByZip extends Component {
 	}
 
 	getWeather = () => {
-		// lookup weather with zipcode
+		// call weather API with zipcode
 		const ZIP = `zip=${this.state.zip}`
 		const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
 		fetch(urlZip)
 			.then(response => response.json())
-			.then(result => this.setWeatherInfo(result))
+			.then(result => this.setState({ result }))
 			.catch(error => this.setState({ error }))
 	}
-
-	setWeatherInfo = result => {
-		// takes results from API call and
-		// routes data to the proper channels
-		this.setTemp(result.main.temp)
-		this.setDescription(result.weather[0].description)
-		this.setPlace(result.name)
-		this.setCondition(result.weather[0].id)
-		this.dayOrNight(result.dt, result.sys.sunrise, result.sys.sunset)
-	}
-
-	setTemp = tempK => {
-		// sets this.state.temp to the result
-		// obtained from Open Weather Map
-		const tempF =  this.convertToFahrenheit(tempK)
-		this.setState( {temp: tempF} )
-	}
-
-	convertToFahrenheit = k => {
-		// takes a temperature in Kelvin
-		// and returns it in Fahrenheit
-		const floatK = parseFloat(k)
-		return (
-			(1.8 * (floatK - 273)) + 32
-			).toFixed(1)
-	}
-
-	setDescription = weather =>
-		// sets this.state.description to the result
-		// obtained from Open Weather Map
-		this.setState( {description: weather })
-
-	setPlace = place =>
-		// sets this.state.name to the result
-		// obtained from Open Weather Map
-		this.setState( {place} )
-
-	setCondition = id =>
-		// sets this.state.condition to the result
-		// obtained from Open Weather Map
-		this.setState( {condition: id} )
-
-	dayOrNight = (time, sunrise, sunset) => {
-		// determines if it is day or night
-		// and sets state accordingly
-		if (time >= sunrise && time < sunset) {
-			this.setState({ day: true })
-		} else {
-			this.setState({ day: false })
-		}
-		//this.setBackground()
-	}
-
+	
 	render () {
 		const {
 			error,
-			dayOrNight,
-			place,
-			temp,
-			description,
-			condition
+			result
 		} = this.state
-		if (!place) {
+		if (!result) {
 			return (
 				<Frame>
 					<h1 id="landing-title" className="day">
@@ -168,11 +108,7 @@ class LookupByZip extends Component {
 			return (
 				<Frame>
 					<Weather
-						dayOrNight={dayOrNight}
-						place={place}
-						temp={temp}
-						description={description}
-						condition={condition}
+						result={result}
 					/>
 					<Search
 						type="text"

@@ -3,7 +3,6 @@ import Frame from '../components/Frame'
 import Search from '../components/Search'
 import { Link } from 'react-router-dom'
 
-
 const Landing = () => 
 	<Frame>
 		<h1 id="landing-title" className="day">

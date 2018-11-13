@@ -14,11 +14,9 @@ class LookupByGeoloc extends Component {
 	state = {
 		lat: '',
 		lon: '',
-		day: true,
-		place: '',
-		temp: '',
-		description: '', 
-		codition: ''
+		result: null,
+		error: null,
+		noGeoLocation: false
 	}
 
 	// component methods
@@ -28,7 +26,6 @@ class LookupByGeoloc extends Component {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(position => {
 				this.setCoords(position)
-				this.setState({ userLocClicked: true })
 			})
 		} else {
 			this.setState({ noGeoLocation: true })
@@ -46,68 +43,16 @@ class LookupByGeoloc extends Component {
 	}
 
 	getWeather = () => {
-		// lookup weather with coordinates
+		// call weather API with coordinates
 		const COORDS = `lat=${this.state.lat}&lon=${this.state.lon}`
 		const urlCoords = `${PATH_BASE}${COORDS}&APPID=${KEY}`
 		fetch(urlCoords)
 			.then(response => response.json())
-			.then(result => this.setWeatherInfo(result))
-			.catch(error => error)
+			.then(result => this.setState({ result }))
+			.catch(error => this.setState({ error }))
 	}
 
-	setWeatherInfo = result => {
-		// takes results from API call and
-		// routes data to the proper channels
-		this.setTemp(result.main.temp)
-		this.setDescription(result.weather[0].description)
-		this.setPlace(result.name)
-		this.setCondition(result.weather[0].id)
-		this.dayOrNight(result.dt, result.sys.sunrise, result.sys.sunset)
-	}
-
-	setTemp = tempK => {
-		// sets this.state.temp to the result
-		// obtained from Open Weather Map
-		const tempF =  this.convertToFahrenheit(tempK)
-		this.setState( {temp: tempF} )
-	}
-
-	convertToFahrenheit = k => {
-		// takes a temperature in Kelvin
-		// and returns it in Fahrenheit
-		const floatK = parseFloat(k)
-		return (
-			(1.8 * (floatK - 273)) + 32
-			).toFixed(1)
-	}
-
-	setDescription = weather =>
-		// sets this.state.description to the result
-		// obtained from Open Weather Map
-		this.setState( {description: weather })
-
-	setPlace = place =>
-		// sets this.state.name to the result
-		// obtained from Open Weather Map
-		this.setState( {place} )
-
-	setCondition = id =>
-		// sets this.state.condition to the result
-		// obtained from Open Weather Map
-		this.setState( {condition: id} )
-
-	dayOrNight = (time, sunrise, sunset) => {
-		// determines if it is day or night
-		// and sets state accordingly
-		if (time >= sunrise && time < sunset) {
-			this.setState({ day: true })
-		} else {
-			this.setState({ day: false })
-		}
-		//this.setBackground()
-	}
-
-	// lifecycle methods
+	// lifecycle hooks
 
 	componentDidMount () {
 		this.getLocation()
@@ -115,27 +60,14 @@ class LookupByGeoloc extends Component {
 
 	render () {
 		const {
-			dayOrNight,
-			place,
-			temp,
-			description,
-			condition
+			result,
+			error
 		} = this.state
-		if (!place) {
-			return (
-				<Frame>
-					<h1>Getting Weather...</h1>
-				</Frame>
-			)
-		} else {
+		if (result) {
 			return (
 				<Frame>
 					<Weather
-						dayOrNight={dayOrNight}
-						place={place}
-						temp={temp}
-						description={description}
-						condition={condition}
+						result={result}
 					/>
 					<Link to='/lookup-by-zip'>
 						<Search
@@ -144,6 +76,18 @@ class LookupByGeoloc extends Component {
 							lookUp
 						/>
 					</Link>
+				</Frame>
+			)
+		} else if (error) {
+			return (
+				<Frame>
+					<p>{error.message}</p>
+				</Frame>
+			)
+		} else {
+			return (
+				<Frame>
+					<h1>Getting Weather...</h1>
 				</Frame>
 			)
 		}
