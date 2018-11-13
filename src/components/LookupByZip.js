@@ -64,19 +64,33 @@ class LookupByZip extends Component {
 	}
 
 	getWeather = () => {
-		// call weather API with zipcode
+		// call weather API with zipcode and
+		// clear zip in state
 		const ZIP = `zip=${this.state.zip}`
 		const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
 		fetch(urlZip)
 			.then(response => response.json())
-			.then(result => this.setState({ result }))
+			.then(result => this.setState({
+				result,
+				zip: '' 
+			}))
 			.catch(error => this.setState({ error }))
+	}
+
+	clearWeather = () => {
+		// resets state to prepare for
+		// a new API call
+		this.setState({
+			result: null,
+			error: null
+		})
 	}
 	
 	render () {
 		const {
+			result,
 			error,
-			result
+			zip
 		} = this.state
 		if (!result) {
 			return (
@@ -90,6 +104,7 @@ class LookupByZip extends Component {
 					<Search
 						type="text"
 						placeholder="Enter US ZIP"
+						value={zip}
 						autoFocus
 						short
 						onChange={this.handleZip}
@@ -113,6 +128,8 @@ class LookupByZip extends Component {
 					<Search
 						type="text"
 						placeholder="&#xf002; Change Location"
+						value={zip}
+						onClick={this.clearWeather}
 						lookUp
 					/>
 					<Link to='/lookup-by-geoloc'>			    	

@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
-import config from '../config'
 import WeatherIcon from './WeatherIcon'
 import ThermoIcon from './ThermoIcon'
-
-// Open Weather Map API url details
-const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
-const KEY = config.key
 
 class Weather extends Component {
 
@@ -42,7 +37,7 @@ class Weather extends Component {
 		const floatK = parseFloat(k)
 		return (
 			(1.8 * (floatK - 273)) + 32
-			).toFixed(1)
+		).toFixed(1)
 	}
 
 	setDescription = weather =>
@@ -68,7 +63,6 @@ class Weather extends Component {
 		} else {
 			this.setState({ day: false })
 		}
-		//this.setBackground()
 	}
 
 	// lifecycle hooks
