@@ -1,18 +1,14 @@
 import React from 'react'
 import Icon from './Icon'
 
-const WeatherIcon = ({ code, dayOrNight }) => {
+const WeatherIcon = ({ code, day }) => {
 	// determines whether to display a
 	// cloud or sun icon dependent upon
 	// weather conditions
 
 	// weather-dependent icon details
-	let celestialBody
-	if (dayOrNight === 'day') {
-		celestialBody = "fas fa-sun fa-3x"
-	} else {
-		celestialBody = "fas fa-moon fa-3x"
-	}
+	const celestialBody = day
+		? "fas fa-sun fa-3x" : "fas fa-moon fa-3x"
 	const cloud = "fas fa-cloud fa-3x"	
 
 	if (
