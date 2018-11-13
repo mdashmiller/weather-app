@@ -1,21 +1,21 @@
 body {
-	background: #69656f;
+	background: #677077; /*md blue*/
 }
 
-.day {
-	color: #f46403;
+.title-gold {
+	color: #f2b632; /*gold*/
 }
 
-.night {
-	color: #fff;
-}
-
-.day-2 {
+.title-grey {
 	color: #eee;
 }
 
-.night-title {
-	color: #f5e44c;
+.day-bg {
+	color: #b5b5b7; /*lt blue*/
+}
+
+.night-bg {
+	color: #252839; /*dk blue*/
 }
 
 #landing-title {
@@ -36,8 +36,8 @@ h2 {
 }
 
 #error-box {
-	border: 3px solid #f46403 !important;
-	color: #f46403;
+	border: 3px solid #f2b632 !important;
+	color: #f2b632;
 }
 
 h3 {

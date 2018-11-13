@@ -45,11 +45,11 @@ const Search = styled.input`
 	  `}
 
 	${props => props.userLocation && css`
-		border: 3px solid #f46403;
+		border: 3px solid #f2b632;
 		caret-color: transparent;
 			
 			&:hover {
-				background: #f46403;
+				background: #f2b632;
 				
 				&::placeholder {
 					color: #eee;
@@ -58,11 +58,11 @@ const Search = styled.input`
 	  `}
 
 	${props => props.userZip && css`
-		border: 3px solid #6a6a6a;
+		border: 3px solid #677077;
 		caret-color: transparent;
 
 			&:hover {
-				background: #69656f;
+				background: #677077;
 				border: 3px solid #eee;
 				
 				&::placeholder {
