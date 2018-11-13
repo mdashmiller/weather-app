@@ -95,9 +95,9 @@ class LookupByZip extends Component {
 		if (!result) {
 			return (
 				<Frame>
-					<h1 id="landing-title" className="day">
+					<h1 id="landing-title" className="title-gold">
 						Weather
-						<span className="day-2">
+						<span className="title-grey">
 							Now
 						</span>
 					</h1>

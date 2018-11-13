@@ -7,7 +7,7 @@ const Button = styled.button`
     border-radius: 4px;
     border: 2px solid #eee;
     color: #eee;
-    background: #69656f;
+    background: #677077;
     padding: 0;
     font-size: 18px;
     font-family: inherit;
@@ -15,7 +15,7 @@ const Button = styled.button`
     cursor: pointer;
 
     	&:hover {
-    		background: #f46403;
+    		background: #f2b632;
     		border: none;
     		outline: none;
     	} 

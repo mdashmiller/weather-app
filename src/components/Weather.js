@@ -81,9 +81,7 @@ class Weather extends Component {
 		} = this.state
 		return (
 			<div>
-				<h1
-					className={`${day ? 'day-title' : 'night-title'}`}
-				>
+				<h1 className="title-gold">
 					{place}
 				</h1>
 				<h2>{temp} F</h2>
