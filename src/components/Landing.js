@@ -12,7 +12,7 @@ const Landing = () =>
 				Now
 			</span>
 		</h1>
-		<Link to='/weather-by-geoloc'>			    	
+		<Link to='/lookup-by-geoloc'>			    	
 			<Search
 				type="text"
 				placeholder="&#xf3c5;  Use My Location"
@@ -20,7 +20,7 @@ const Landing = () =>
 				userLocation
 			/>
 		</Link>
-		<Link to='/lookup'>
+		<Link to='/lookup-by-zip'>
 			<Search
 				placeholder="&#xf002;  Lookup by Zip"
 				landingPage
@@ -28,7 +28,5 @@ const Landing = () =>
 			/>		 		    
 		</Link>    
 	</Frame>
-
-	
 
 export default Landing
