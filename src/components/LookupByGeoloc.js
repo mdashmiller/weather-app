@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import config from '../config'
 import { Link } from 'react-router-dom'
-import Canvas from './Canvas'
 import Frame from './Frame'
 import Weather from './Weather'
 import Search from  './Search'
@@ -15,9 +14,8 @@ class LookupByGeoloc extends Component {
 	state = {
 		lat: '',
 		lon: '',
-		result: null,
+		result: {},
 		error: null,
-		day: null,
 		noGeoLocation: false
 	}
 
@@ -50,25 +48,13 @@ class LookupByGeoloc extends Component {
 		const urlCoords = `${PATH_BASE}${COORDS}&APPID=${KEY}`
 		fetch(urlCoords)
 			.then(response => response.json())
-			.then(result => this.setState({ result }))
+			.then(result => this.setWeatherInfo(result))
 			.catch(error => this.setState({ error }))
-		this.state.result &&
-			this.dayOrNight(
-				this.state.result.dt,
-				this.state.result.sys.sunrise,
-				this.state.result.sys.sunset
-			)
+		
 	}
 
-	dayOrNight = (time, sunrise, sunset) => {
-		// determines if it is day or night
-		// and sets state accordingly
-		if (time >= sunrise && time < sunset) {
-			this.setState({ day: true })
-		} else {
-			this.setState({ day: false })
-		}
-	}
+	setWeatherInfo = result => 
+		this.setState({ result })
 
 	// lifecycle hooks
 
@@ -79,43 +65,36 @@ class LookupByGeoloc extends Component {
 	render () {
 		const {
 			result,
-			day,
 			error
 		} = this.state
-		if (result) {
+		if (result.name) {
 			return (
-				<Canvas
-					className={ day ? 'day-bg' : 'night-bg' }
-				>
-					<Frame>
-						<Weather
-							result={result}
+				<Frame>
+					<Weather
+						result={result}
+					/>
+					<Link to='/lookup-by-zip'>
+						<Search
+							type="text"
+							placeholder="&#xf002; Change Location"
+							lookUp
 						/>
-						<Link to='/lookup-by-zip'>
-							<Search
-								type="text"
-								placeholder="&#xf002; Change Location"
-								lookUp
-							/>
-						</Link>
-					</Frame>
-				</Canvas>
+					</Link>
+				</Frame>
 			)
 		} else if (error) {
-			return (
-				<Canvas>
-					<Frame>
-						<p>{error.message}</p>
-					</Frame>
-				</Canvas>
+			return (		
+				<Frame>
+					<p>{error.message}</p>
+				</Frame>				
 			)
 		} else {
-			return (
-				<Canvas>
-					<Frame>
-						<h1>Getting Weather...</h1>
-					</Frame>
-				</Canvas>
+			return (			
+				<Frame>
+					<h2>Getting Weather...</h2>
+					<i className="fas fa-spinner fa-2x">
+					</i>
+				</Frame>			
 			)
 		}
 	}
