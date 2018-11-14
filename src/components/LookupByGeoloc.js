@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import config from '../config'
 import { Link } from 'react-router-dom'
+import Canvas from './Canvas'
 import Frame from './Frame'
 import Weather from './Weather'
 import Search from  './Search'
@@ -16,6 +17,7 @@ class LookupByGeoloc extends Component {
 		lon: '',
 		result: null,
 		error: null,
+		day: null,
 		noGeoLocation: false
 	}
 
@@ -50,6 +52,22 @@ class LookupByGeoloc extends Component {
 			.then(response => response.json())
 			.then(result => this.setState({ result }))
 			.catch(error => this.setState({ error }))
+		this.state.result &&
+			this.dayOrNight(
+				this.state.result.dt,
+				this.state.result.sys.sunrise,
+				this.state.result.sys.sunset
+			)
+	}
+
+	dayOrNight = (time, sunrise, sunset) => {
+		// determines if it is day or night
+		// and sets state accordingly
+		if (time >= sunrise && time < sunset) {
+			this.setState({ day: true })
+		} else {
+			this.setState({ day: false })
+		}
 	}
 
 	// lifecycle hooks
@@ -61,34 +79,43 @@ class LookupByGeoloc extends Component {
 	render () {
 		const {
 			result,
+			day,
 			error
 		} = this.state
 		if (result) {
 			return (
-				<Frame>
-					<Weather
-						result={result}
-					/>
-					<Link to='/lookup-by-zip'>
-						<Search
-							type="text"
-							placeholder="&#xf002; Change Location"
-							lookUp
+				<Canvas
+					className={ day ? 'day-bg' : 'night-bg' }
+				>
+					<Frame>
+						<Weather
+							result={result}
 						/>
-					</Link>
-				</Frame>
+						<Link to='/lookup-by-zip'>
+							<Search
+								type="text"
+								placeholder="&#xf002; Change Location"
+								lookUp
+							/>
+						</Link>
+					</Frame>
+				</Canvas>
 			)
 		} else if (error) {
 			return (
-				<Frame>
-					<p>{error.message}</p>
-				</Frame>
+				<Canvas>
+					<Frame>
+						<p>{error.message}</p>
+					</Frame>
+				</Canvas>
 			)
 		} else {
 			return (
-				<Frame>
-					<h1>Getting Weather...</h1>
-				</Frame>
+				<Canvas>
+					<Frame>
+						<h1>Getting Weather...</h1>
+					</Frame>
+				</Canvas>
 			)
 		}
 	}

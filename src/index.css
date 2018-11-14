@@ -1,9 +1,19 @@
+html {
+	height: 100%;
+}
+
 body {
-	background: #677077; /*md blue*/
+	background: #677077; 
+	margin: 0;
+	height: 100%;
+}
+
+#root {
+	height: 100%
 }
 
 .title-gold {
-	color: #f2b632; /*gold*/
+	color: #f2b632;
 }
 
 .title-grey {
@@ -11,11 +21,11 @@ body {
 }
 
 .day-bg {
-	color: #b5b5b7; /*lt blue*/
+	background: #677077 !important;
 }
 
 .night-bg {
-	color: #252839; /*dk blue*/
+	background: #252839 !important;
 }
 
 #landing-title {
