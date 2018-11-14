@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import config from '../config'
 import { Link } from 'react-router-dom'
+import Canvas from './Canvas'
 import Frame from './Frame'
 import Search from './Search'
 import Button from './Button'
@@ -15,6 +16,7 @@ class LookupByZip extends Component {
 	state = {
 		zip: '',
 		result: null,
+		day: null,
 		error: null
 	}
 
@@ -75,6 +77,22 @@ class LookupByZip extends Component {
 				zip: '' 
 			}))
 			.catch(error => this.setState({ error }))
+		this.state.result &&
+			this.dayOrNight(
+				this.state.result.dt,
+				this.state.result.sys.sunrise,
+				this.state.result.sys.sunset
+			)
+	}
+
+	dayOrNight = (time, sunrise, sunset) => {
+		// determines if it is day or night
+		// and sets state accordingly
+		if (time >= sunrise && time < sunset) {
+			this.setState({ day: true })
+		} else {
+			this.setState({ day: false })
+		}
 	}
 
 	clearWeather = () => {
@@ -90,7 +108,8 @@ class LookupByZip extends Component {
 		const {
 			result,
 			error,
-			zip
+			zip,
+			day
 		} = this.state
 		if (!result) {
 			return (
@@ -121,27 +140,31 @@ class LookupByZip extends Component {
 			)
 		} else {
 			return (
-				<Frame>
-					<Weather
-						result={result}
-					/>
-					<Search
-						type="text"
-						placeholder="&#xf002; Change Location"
-						value={zip}
-						onClick={this.clearWeather}
-						lookUp
-					/>
-					<Link to='/lookup-by-geoloc'>			    	
-						<Search
-							autoFocus
-							type="text"
-							placeholder="&#xf3c5;  Use My Location"
-							displayPage
-							userLocation
+				<Canvas
+					className={day ? 'day-bg' : 'night-bg'}
+				>
+					<Frame>
+						<Weather
+							result={result}
 						/>
-					</Link>
-				</Frame>
+						<Search
+							type="text"
+							placeholder="&#xf002; Change Location"
+							value={zip}
+							onClick={this.clearWeather}
+							lookUp
+						/>
+						<Link to='/lookup-by-geoloc'>			    	
+							<Search
+								autoFocus
+								type="text"
+								placeholder="&#xf3c5;  Use My Location"
+								displayPage
+								userLocation
+							/>
+						</Link>
+					</Frame>
+				</Canvas>
 			)
 		}
 	}
