@@ -15,7 +15,7 @@ class LookupByZip extends Component {
 
 	state = {
 		zip: '',
-		result: null,
+		result: {},
 		day: null,
 		error: null
 	}
@@ -68,16 +68,20 @@ class LookupByZip extends Component {
 	getWeather = () => {
 		// call weather API with zipcode and
 		// clear zip in state
-		const ZIP = `zip=${this.state.zip}`
+		const ZIP = `zip=${this.state.zip}`	
 		const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
 		fetch(urlZip)
 			.then(response => response.json())
-			.then(result => this.setState({
-				result,
-				zip: '' 
-			}))
+			.then(result => this.setWeatherInfo(result))
 			.catch(error => this.setState({ error }))
-		this.state.result &&
+	}
+
+	setWeatherInfo = result => {
+		this.setState({
+			result,
+			zip: ''
+		})
+		this.state.result != null &&
 			this.dayOrNight(
 				this.state.result.dt,
 				this.state.result.sys.sunrise,
@@ -99,7 +103,7 @@ class LookupByZip extends Component {
 		// resets state to prepare for
 		// a new API call
 		this.setState({
-			result: null,
+			result: {},
 			error: null
 		})
 	}
@@ -111,7 +115,7 @@ class LookupByZip extends Component {
 			zip,
 			day
 		} = this.state
-		if (!result) {
+		if (!result.name) {
 			return (
 				<Frame>
 					<h1 id="landing-title" className="title-gold">
@@ -128,7 +132,7 @@ class LookupByZip extends Component {
 						short
 						onChange={this.handleZip}
 						onKeyPress={this.handleKeyPress}
-						id={error && 'error-box'}
+						id={ error ? 'error-box' : undefined }
 					/>
 					<Button onClick={this.getWeather}>
 						Go
