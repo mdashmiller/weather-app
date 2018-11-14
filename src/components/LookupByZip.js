@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import config from '../config'
 import { Link } from 'react-router-dom'
-import Canvas from './Canvas'
 import Frame from './Frame'
 import Search from './Search'
 import Button from './Button'
@@ -16,8 +15,8 @@ class LookupByZip extends Component {
 	state = {
 		zip: '',
 		result: {},
-		day: null,
-		error: null
+		error: null,
+		searchClicked: false
 	}
 
 	// component methods
@@ -65,9 +64,16 @@ class LookupByZip extends Component {
 		}
 	}
 
+	handleClick = () => {
+		this.startSpinner()
+		this.getWeather()
+	}
+
+	startSpinner = () => 
+		this.setState({ searchClicked: true })
+
 	getWeather = () => {
-		// call weather API with zipcode and
-		// clear zip in state
+		// call weather API with zipcode
 		const ZIP = `zip=${this.state.zip}`	
 		const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
 		fetch(urlZip)
@@ -76,44 +82,28 @@ class LookupByZip extends Component {
 			.catch(error => this.setState({ error }))
 	}
 
-	setWeatherInfo = result => {
+	setWeatherInfo = result =>
+		// set result from API call
+		// and reset zip in state
 		this.setState({
 			result,
-			zip: ''
+			zip: '',
+			searchClicked: false
 		})
-		this.state.result != null &&
-			this.dayOrNight(
-				this.state.result.dt,
-				this.state.result.sys.sunrise,
-				this.state.result.sys.sunset
-			)
-	}
 
-	dayOrNight = (time, sunrise, sunset) => {
-		// determines if it is day or night
-		// and sets state accordingly
-		if (time >= sunrise && time < sunset) {
-			this.setState({ day: true })
-		} else {
-			this.setState({ day: false })
-		}
-	}
-
-	clearWeather = () => {
+	clearWeather = () => 
 		// resets state to prepare for
 		// a new API call
 		this.setState({
 			result: {},
 			error: null
 		})
-	}
 	
 	render () {
 		const {
 			result,
-			error,
 			zip,
-			day
+			searchClicked
 		} = this.state
 		if (!result.name) {
 			return (
@@ -132,43 +122,46 @@ class LookupByZip extends Component {
 						short
 						onChange={this.handleZip}
 						onKeyPress={this.handleKeyPress}
-						id={ error ? 'error-box' : undefined }
+						id={ result.cod ? 'error-box' : undefined }
 					/>
-					<Button onClick={this.getWeather}>
-						Go
-					</Button>
-					{	error &&
-						<h2 id="error">Hm, that doesn't seem to be a valid US zip. Try again?</h2>
+					{	!searchClicked 
+							? (
+								<Button onClick={this.handleClick}>
+									Go
+								</Button>
+							) : (
+								<i className="fas fa-spinner fa-2x zip-spinner">
+								</i>
+							)
+					}
+					{	result.cod &&
+							<h2 id="error">Hm, that doesn't seem to be a valid US zip. Try again?</h2>
 					}
 				</Frame>
 			)
 		} else {
 			return (
-				<Canvas
-					className={day ? 'day-bg' : 'night-bg'}
-				>
-					<Frame>
-						<Weather
-							result={result}
-						/>
+				<Frame>
+					<Weather
+						result={result}
+					/>
+					<Search
+						type="text"
+						placeholder="&#xf002; Change Location"
+						value={zip}
+						onClick={this.clearWeather}
+						lookUp
+					/>
+					<Link to='/lookup-by-geoloc'>			    	
 						<Search
+							autoFocus
 							type="text"
-							placeholder="&#xf002; Change Location"
-							value={zip}
-							onClick={this.clearWeather}
-							lookUp
+							placeholder="&#xf3c5;  Use My Location"
+							displayPage
+							userLocation
 						/>
-						<Link to='/lookup-by-geoloc'>			    	
-							<Search
-								autoFocus
-								type="text"
-								placeholder="&#xf3c5;  Use My Location"
-								displayPage
-								userLocation
-							/>
-						</Link>
-					</Frame>
-				</Canvas>
+					</Link>
+				</Frame>
 			)
 		}
 	}

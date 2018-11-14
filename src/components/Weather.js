@@ -5,7 +5,7 @@ import ThermoIcon from './ThermoIcon'
 class Weather extends Component {
 
 	state = {
-		day: true,
+		day: null,
 		place: '',
 		temp: '',
 		description: '', 

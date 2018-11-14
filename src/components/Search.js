@@ -58,11 +58,10 @@ const Search = styled.input`
 	  `}
 
 	${props => props.userZip && css`
-		border: 3px solid #677077;
 		caret-color: transparent;
 
 			&:hover {
-				background: #677077;
+				background: #52606b;
 				border: 3px solid #eee;
 				
 				&::placeholder {
