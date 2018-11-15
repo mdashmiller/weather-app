@@ -64,12 +64,27 @@ class LookupByZip extends Component {
 		}
 	}
 
+	clearError = () => {
+		// if there was a fetch error, this will 
+		// clear the API fail message and reset 
+		// the form when user
+		// goes to enter a new zip
+		this.setState({
+			error: null,
+			searchClicked: false
+		})
+	}
+
 	handleClick = () => {
+		// handles the click event for the
+		// search-by-zip submit button
 		this.startSpinner()
 		this.getWeather()
 	}
 
 	startSpinner = () => 
+		// sets state so that a conditional
+		// loading spinner will be rendered
 		this.setState({ searchClicked: true })
 
 	getWeather = () => {
@@ -82,15 +97,26 @@ class LookupByZip extends Component {
 			.catch(error => this.setState({ error }))
 	}
 
-	setWeatherInfo = result =>
-		// set result from API call
-		// and reset zip in state
-		this.setState({
-			result,
-			zip: '',
-			searchClicked: false
-		})
-
+	setWeatherInfo = result => {
+		result.name ? (
+			// set result from API call
+			// and reset zip in state on 
+			// a successful call
+			this.setState({
+				result,
+				zip: '',
+				searchClicked: false
+			})
+		) : (
+			// don't reset the zip if
+			// a bad zip was entered
+			this.setState({
+				result,
+				searchClicked: false
+			})
+		)
+	}
+		
 	clearWeather = () => 
 		// resets state to prepare for
 		// a new API call
@@ -103,17 +129,21 @@ class LookupByZip extends Component {
 		const {
 			result,
 			zip,
+			error,
 			searchClicked
 		} = this.state
+		console.log(error)
 		if (!result.name) {
 			return (
 				<Frame>
-					<h1 id="landing-title" className="title-gold">
-						Weather
-						<span className="title-grey">
-							Now
-						</span>
-					</h1>
+					<Link to='/'>
+						<h1 id="landing-title" className="title-gold">
+							Weather
+							<span className="title-grey">
+								Now
+							</span>
+						</h1>
+					</Link>
 					<Search
 						type="text"
 						placeholder="Enter US ZIP"
@@ -122,20 +152,33 @@ class LookupByZip extends Component {
 						short
 						onChange={this.handleZip}
 						onKeyPress={this.handleKeyPress}
+						onClick={this.clearError}
 						id={ result.cod ? 'error-box' : undefined }
 					/>
-					{	!searchClicked 
+					{
+						searchClicked && !error
 							? (
+								<i className="fas fa-spinner fa-2x zip-spinner">
+								</i>	
+							) : (
 								<Button onClick={this.handleClick}>
 									Go
 								</Button>
-							) : (
-								<i className="fas fa-spinner fa-2x zip-spinner">
-								</i>
 							)
 					}
-					{	result.cod &&
-							<h2 id="error">Hm, that doesn't seem to be a valid US zip. Try again?</h2>
+					{
+						result.cod &&
+							<div id="error">
+								<h2>Hm, that doesn't seem to be a valid US zip.</h2>
+								<h2>Try again?</h2>
+							</div>
+					}
+					{
+						error &&
+							<div>
+								<h2>It looks like openweathermap.org is having some issues.</h2>
+								<h2>Please try again in a few minutes.</h2>
+							</div>
 					}
 				</Frame>
 			)

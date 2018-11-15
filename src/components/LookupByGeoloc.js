@@ -85,14 +85,34 @@ class LookupByGeoloc extends Component {
 		} else if (error) {
 			return (		
 				<Frame>
-					<p>{error.message}</p>
+					<Link to='/'>
+						<h1 id="landing-title" className="title-gold">
+							Weather
+							<span className="title-grey">
+								Now
+							</span>
+						</h1>
+					</Link>
+					<h2>It looks like openweathermap.org is having some issues.</h2>
+					<h2>Please try again in a few minutes.</h2>	    	
+					<Search
+						type="text"
+						placeholder="&#xf3c5;  Try Again?"
+						onClick={() => window.location.reload()}
+						landingPage
+						userLocation
+						short
+						style={{ 'text-align': 'center' }}
+					/>
 				</Frame>				
 			)
 		} else {
 			return (			
 				<Frame>
-					<h2>Getting Weather...</h2>
-					<i className="fas fa-spinner fa-2x">
+					<h2 style={{ 'margin-top': '64px' }}>Getting Weather...</h2>
+					<i className="fas fa-spinner fa-2x"
+						style={{ 'margin-top': '30px'}}
+					>
 					</i>
 				</Frame>			
 			)
