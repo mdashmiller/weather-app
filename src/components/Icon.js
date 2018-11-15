@@ -7,7 +7,7 @@ const Icon = styled.i`
     color: #c3c3c3;
 
     ${props => props.dark && css`
-        color: #5b5b5b;
+        color: #818181;
       `}
 `
 
