@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import config from '../config'
+import config from '../../config'
 import { Link } from 'react-router-dom'
-import Frame from './Frame'
 import Weather from './Weather'
-import Search from  './Search'
-import Title from './Title'
 import NoGeo from  './NoGeo'
 import ErrorMsg from './ErrorMsg'
+import Frame from '../ui/Frame'
+import Search from  '../ui/Search'
+import Title from '../ui/Title'
 
 // Open Weather Map API url details
 const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'

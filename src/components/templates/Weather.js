@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import WeatherIcon from './WeatherIcon'
-import ThermoIcon from './ThermoIcon'
+import WeatherIcon from '../ui/WeatherIcon'
+import ThermoIcon from '../ui/ThermoIcon'
 
 class Weather extends Component {
 

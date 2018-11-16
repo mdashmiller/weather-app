@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Frame from './Frame'
-import Search from './Search'
+import Frame from '../ui/Frame'
+import Search from '../ui/Search'
 
 const NoGeo = () =>
 	<Frame>

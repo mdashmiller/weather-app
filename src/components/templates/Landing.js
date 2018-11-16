@@ -1,7 +1,7 @@
 import React from 'react'
-import Frame from '../components/Frame'
-import Search from '../components/Search'
 import { Link } from 'react-router-dom'
+import Frame from '../ui/Frame'
+import Search from '../ui/Search'
 
 const Landing = () => 
 	<Frame>
