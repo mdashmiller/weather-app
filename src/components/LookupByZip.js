@@ -5,6 +5,8 @@ import Frame from './Frame'
 import Search from './Search'
 import Button from './Button'
 import Weather from './Weather'
+import Title from './Title'
+import ErrorMsg from './ErrorMsg'
 
 // Open Weather Map API url details
 const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
@@ -132,18 +134,10 @@ class LookupByZip extends Component {
 			error,
 			searchClicked
 		} = this.state
-		console.log(error)
 		if (!result.name) {
 			return (
 				<Frame>
-					<Link to='/'>
-						<h1 id="landing-title" className="title-gold">
-							Weather
-							<span className="title-grey">
-								Now
-							</span>
-						</h1>
-					</Link>
+					<Title />
 					<Search
 						type="text"
 						placeholder="Enter US ZIP"
@@ -175,10 +169,7 @@ class LookupByZip extends Component {
 					}
 					{
 						error &&
-							<div>
-								<h2>It looks like openweathermap.org is having some issues.</h2>
-								<h2>Please try again in a few minutes.</h2>
-							</div>
+							<ErrorMsg />
 					}
 				</Frame>
 			)

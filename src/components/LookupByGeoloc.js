@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 import Frame from './Frame'
 import Weather from './Weather'
 import Search from  './Search'
+import Title from './Title'
+import NoGeo from  './NoGeo'
+import ErrorMsg from './ErrorMsg'
 
 // Open Weather Map API url details
 const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
@@ -21,16 +24,9 @@ class LookupByGeoloc extends Component {
 
 	// component methods
 
-	getLocation = () => {
+	getLocation = () => //{
 		// finds user's latitude and longitude
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(position => {
-				this.setCoords(position)
-			})
-		} else {
-			this.setState({ noGeoLocation: true })
-		}
-	}
+		navigator.geolocation.getCurrentPosition(this.setCoords, this.geoError)
 
 	setCoords = position => {
 		// sets users lattitude and longitude  
@@ -41,6 +37,11 @@ class LookupByGeoloc extends Component {
 		})
 		this.getWeather()
 	}
+
+	geoError = () =>
+		// sets state to render a conditonal template
+		// when users geolocation is disabled
+		this.setState({ noGeoLocation: true })
 
 	getWeather = () => {
 		// call weather API with coordinates
@@ -65,6 +66,7 @@ class LookupByGeoloc extends Component {
 	render () {
 		const {
 			result,
+			noGeoLocation,
 			error
 		} = this.state
 		if (result.name) {
@@ -82,19 +84,15 @@ class LookupByGeoloc extends Component {
 					</Link>
 				</Frame>
 			)
+		} else if (noGeoLocation) {
+			return (
+				<NoGeo />
+			)
 		} else if (error) {
 			return (		
 				<Frame>
-					<Link to='/'>
-						<h1 id="landing-title" className="title-gold">
-							Weather
-							<span className="title-grey">
-								Now
-							</span>
-						</h1>
-					</Link>
-					<h2>It looks like openweathermap.org is having some issues.</h2>
-					<h2>Please try again in a few minutes.</h2>	    	
+					<Title />
+					<ErrorMsg />	    	
 					<Search
 						type="text"
 						placeholder="&#xf3c5;  Try Again?"
@@ -102,17 +100,15 @@ class LookupByGeoloc extends Component {
 						landingPage
 						userLocation
 						short
-						style={{ 'text-align': 'center' }}
+						geoError
 					/>
 				</Frame>				
-			)
+			)		
 		} else {
 			return (			
 				<Frame>
-					<h2 style={{ 'margin-top': '64px' }}>Getting Weather...</h2>
-					<i className="fas fa-spinner fa-2x"
-						style={{ 'margin-top': '30px'}}
-					>
+					<h2 className="geoloc-load-title">Getting Weather...</h2>
+					<i className="fas fa-spinner fa-2x geoloc-spinner">
 					</i>
 				</Frame>			
 			)
