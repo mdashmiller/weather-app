@@ -21,16 +21,9 @@ class LookupByGeoloc extends Component {
 
 	// component methods
 
-	getLocation = () => {
+	getLocation = () => //{
 		// finds user's latitude and longitude
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(position => {
-				this.setCoords(position)
-			})
-		} else {
-			this.setState({ noGeoLocation: true })
-		}
-	}
+		navigator.geolocation.getCurrentPosition(this.setCoords, this.geoError)
 
 	setCoords = position => {
 		// sets users lattitude and longitude  
@@ -41,6 +34,11 @@ class LookupByGeoloc extends Component {
 		})
 		this.getWeather()
 	}
+
+	geoError = () =>
+		// sets state to render a conditonal template
+		// when users geolocation is disabled
+		this.setState({ noGeoLocation: true })
 
 	getWeather = () => {
 		// call weather API with coordinates
@@ -65,8 +63,10 @@ class LookupByGeoloc extends Component {
 	render () {
 		const {
 			result,
+			noGeoLocation,
 			error
 		} = this.state
+		console.log(noGeoLocation)
 		if (result.name) {
 			return (
 				<Frame>
@@ -77,6 +77,29 @@ class LookupByGeoloc extends Component {
 						<Search
 							type="text"
 							placeholder="&#xf002; Change Location"
+							lookUp
+						/>
+					</Link>
+				</Frame>
+			)
+		} else if (noGeoLocation) {
+			return (
+				<Frame>
+					<Link to='/'>
+						<h1 id="landing-title" className="title-gold">
+							Weather
+							<span className="title-grey">
+								Now
+							</span>
+						</h1>
+					</Link>
+					<h2>It looks like geolocation is disabled.</h2>
+					<h2>Would you like to search for weather by zipcode?</h2>
+					<Link to='/lookup-by-zip'>
+						<Search
+							type="text"
+							placeholder="&#xf002; Lookup By Zip"
+							noGeo
 							lookUp
 						/>
 					</Link>
@@ -105,13 +128,13 @@ class LookupByGeoloc extends Component {
 						style={{ 'text-align': 'center' }}
 					/>
 				</Frame>				
-			)
+			)		
 		} else {
 			return (			
 				<Frame>
-					<h2 style={{ 'margin-top': '64px' }}>Getting Weather...</h2>
+					<h2 style={{ 'marginTop': '64px' }}>Getting Weather...</h2>
 					<i className="fas fa-spinner fa-2x"
-						style={{ 'margin-top': '30px'}}
+						style={{ 'marginTop': '30px'}}
 					>
 					</i>
 				</Frame>			

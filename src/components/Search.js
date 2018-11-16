@@ -69,6 +69,10 @@ const Search = styled.input`
 				}
 			} 
 	  `}
+
+	${props => props.noGeo && css`
+		margin-top: 60px;
+	  `}
 `
 
 export default Search
