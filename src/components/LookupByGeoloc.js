@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 import Frame from './Frame'
 import Weather from './Weather'
 import Search from  './Search'
+import Title from './Title'
+import NoGeo from  './NoGeo'
+import ErrorMsg from './ErrorMsg'
 
 // Open Weather Map API url details
 const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
@@ -66,7 +69,6 @@ class LookupByGeoloc extends Component {
 			noGeoLocation,
 			error
 		} = this.state
-		console.log(noGeoLocation)
 		if (result.name) {
 			return (
 				<Frame>
@@ -84,40 +86,13 @@ class LookupByGeoloc extends Component {
 			)
 		} else if (noGeoLocation) {
 			return (
-				<Frame>
-					<Link to='/'>
-						<h1 id="landing-title" className="title-gold">
-							Weather
-							<span className="title-grey">
-								Now
-							</span>
-						</h1>
-					</Link>
-					<h2>It looks like geolocation is disabled.</h2>
-					<h2>Would you like to search for weather by zipcode?</h2>
-					<Link to='/lookup-by-zip'>
-						<Search
-							type="text"
-							placeholder="&#xf002; Lookup By Zip"
-							noGeo
-							lookUp
-						/>
-					</Link>
-				</Frame>
+				<NoGeo />
 			)
 		} else if (error) {
 			return (		
 				<Frame>
-					<Link to='/'>
-						<h1 id="landing-title" className="title-gold">
-							Weather
-							<span className="title-grey">
-								Now
-							</span>
-						</h1>
-					</Link>
-					<h2>It looks like openweathermap.org is having some issues.</h2>
-					<h2>Please try again in a few minutes.</h2>	    	
+					<Title />
+					<ErrorMsg />	    	
 					<Search
 						type="text"
 						placeholder="&#xf3c5;  Try Again?"
@@ -125,17 +100,15 @@ class LookupByGeoloc extends Component {
 						landingPage
 						userLocation
 						short
-						style={{ 'text-align': 'center' }}
+						geoError
 					/>
 				</Frame>				
 			)		
 		} else {
 			return (			
 				<Frame>
-					<h2 style={{ 'marginTop': '64px' }}>Getting Weather...</h2>
-					<i className="fas fa-spinner fa-2x"
-						style={{ 'marginTop': '30px'}}
-					>
+					<h2 className="geoloc-load-title">Getting Weather...</h2>
+					<i className="fas fa-spinner fa-2x geoloc-spinner">
 					</i>
 				</Frame>			
 			)

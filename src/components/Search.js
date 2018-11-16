@@ -4,7 +4,7 @@ const Search = styled.input`
 	background: #eee;
 	border: 1px solid #c3c3c3;
 	border-radius: 10px;
-	margin: 200px auto 20px;
+	margin: 172px auto 20px;
 	width: 200px;
 	height: 34px;
 	padding-left: 10px;
@@ -20,13 +20,13 @@ const Search = styled.input`
 	    @media (max-width: 380px) {
 	        margin: 80px auto 20px;
 	      }
-	  `}
+	`}
 
 	${props => props.short && css`
 	    width: 114px;
 	    padding-left: 5px;
 	    margin: 0;
-	  `}
+	`}
 
 	${props => props.landingPage && css`
 		display: block;
@@ -35,14 +35,14 @@ const Search = styled.input`
 		text-align: left;
 		padding-left: 4px;
 		cursor: pointer;  
-	  `}
+	`}
 
 	${props => props.displayPage && css`
 	    display: block;
 	    width: 200px;
 	   	margin: 0 auto;
 	   	cursor: pointer; 
-	  `}
+	`}
 
 	${props => props.userLocation && css`
 		border: 3px solid #f2b632;
@@ -55,7 +55,7 @@ const Search = styled.input`
 					color: #eee;
 				}
 			}	
-	  `}
+	`}
 
 	${props => props.userZip && css`
 		caret-color: transparent;
@@ -68,11 +68,15 @@ const Search = styled.input`
 					color: #eee;
 				}
 			} 
-	  `}
+	`}
 
 	${props => props.noGeo && css`
 		margin-top: 60px;
-	  `}
+	`}
+
+	${props => props.geoError && css`
+		text-align: center;
+	`}
 `
 
 export default Search
