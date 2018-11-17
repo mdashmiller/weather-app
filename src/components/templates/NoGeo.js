@@ -1,18 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Frame from '../ui/Frame'
+import Title from '../ui/Title'
 import Search from '../ui/Search'
 
 const NoGeo = () =>
 	<Frame>
-		<Link to='/'>
-			<h1 id="landing-title" className="title-gold">
-				Weather
-				<span className="title-grey">
-					Now
-				</span>
-			</h1>
-		</Link>
+		<Title />
 		<h2>It looks like geolocation is disabled.</h2>
 		<h2>Would you like to search for weather by zipcode?</h2>
 		<Link to='/lookup-by-zip'>

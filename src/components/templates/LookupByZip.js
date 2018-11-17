@@ -41,7 +41,7 @@ class LookupByZip extends Component {
 		}
 		// allows a max of 5 chars and allows user
 		// to replace any chars that are highlighted
-		if (numOfChars < 5 || selection != '') {
+		if (numOfChars < 5 || selection !== '') {
 			// input will only accept [0 - 9]
 			if (char >= 48 && char <= 57) {
 				return
