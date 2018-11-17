@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NoGeo /> rendering has a valid snapshot 1`] = `
+<div
+  className="sc-bdVaJa cOdhsb"
+>
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    <h1
+      className="title-gold"
+      id="landing-title"
+    >
+      Weather
+      <span
+        className="title-grey"
+      >
+        Now
+      </span>
+    </h1>
+  </a>
+  <h2>
+    It looks like geolocation is disabled.
+  </h2>
+  <h2>
+    Would you like to search for weather by zipcode?
+  </h2>
+  <a
+    href="/lookup-by-zip"
+    onClick={[Function]}
+  >
+    <input
+      className="sc-bwzfXH gJAmOf"
+      placeholder=" Lookup By Zip"
+      type="text"
+    />
+  </a>
+</div>
+`;

@@ -2,15 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Frame from '../ui/Frame'
 import Search from '../ui/Search'
+import Title from '../ui/Title'
 
 const Landing = () => 
 	<Frame>
-		<h1 id="landing-title" className="title-gold">
-			Weather
-			<span className="title-grey">
-				Now
-			</span>
-		</h1>
+		<Title />
 		<Link to='/lookup-by-geoloc'>			    	
 			<Search
 				type="text"

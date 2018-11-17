@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorMsg /> rendering has a valid snapshot 1`] = `
+<div>
+  <h2>
+    It looks like openweathermap.org is having some issues.
+  </h2>
+  <h2>
+    Please try again in a few minutes.
+  </h2>
+</div>
+`;
