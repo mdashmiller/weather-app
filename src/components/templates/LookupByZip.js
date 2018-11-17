@@ -34,12 +34,14 @@ class LookupByZip extends Component {
 		// and quality of chars the user can enter
 		const numOfChars = e.target.value.length	
 		const char = e.key || e.keyCode
+		const selection = document.getSelection().toString()
 		// submit with enter key
 		if (char === 13 || char === 'Enter' ) {
 			this.getWeather()
 		}
-		// allows a max of 5 chars
-		if (numOfChars < 5) {
+		// allows a max of 5 chars and allows user
+		// to replace any chars that are highlighted
+		if (numOfChars < 5 || selection != '') {
 			// input will only accept [0 - 9]
 			if (char >= 48 && char <= 57) {
 				return
