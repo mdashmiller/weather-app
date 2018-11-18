@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WeatherIcon /> rendering has a valid snapshot 1`] = `
+<i
+  className="fas fa-moon fa-3x sc-bdVaJa bSIgLK"
+/>
+`;
