@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Title /> rendering has a valid snapshot 1`] = `
+<a
+  href="/"
+  onClick={[Function]}
+>
+  <h1
+    className="title-gold"
+    id="landing-title"
+  >
+    Weather
+    <span
+      className="title-grey"
+    >
+      Now
+    </span>
+  </h1>
+</a>
+`;
