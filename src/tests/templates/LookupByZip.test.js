@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import renderer from 'react-test-renderer'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { shallow, render } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { BrowserRouter, Link } from 'react-router-dom'
 
@@ -112,6 +112,45 @@ describe('<LookupByZip /> rendering when there is weather data', () => {
 
 	it('renders 2 <Search> components', () => {
 		expect(wrapper.find(Search).length).toBe(2)
+	})
+
+})
+
+describe('<Search> functionality with no weather data', () => {
+
+	// can't get this one to work
+	// it('calls handleZip() with user input', () => {
+	// 	const handleZip = jest.fn()
+	// 	const wrapper = shallow(<LookupByZip onChange={handleZip} />)
+	// 	wrapper.find(Search).simulate('change', { target: { value: '12345' } })
+	// 	expect(handleZip).toHaveBeenCalled()
+	// })
+
+	it('updates zip in state with user input', () => {
+		const handleZip = jest.fn()
+		const wrapper = shallow(<LookupByZip />)
+		wrapper.find(Search).simulate('change', { target: { value: '12345' } })
+		expect(wrapper.state('zip')).toBe('12345')
+	})
+
+	// 	says document.getSelection() is not a function
+	// it('calls handleKeyPress() when user types', () => {
+	// 	const handleKeyPress = jest.fn()
+	// 	const wrapper = shallow(<LookupByZip handleKeyPress={handleKeyPress} />)
+	// 	wrapper.find(Search).simulate('keypress', { target: { value: 37 } })
+	// 	expect(handleKeyPress).toHaveBeenCalled()
+	// })
+
+	// it('calls clearError() with user click', () => {
+		
+	// })
+
+	it('clears error from state with user click', () => {
+		const clearError = jest.fn()
+		const wrapper = shallow(<LookupByZip />)
+		wrapper.setState({ error: {} })
+		wrapper.find(Search).simulate('click')
+		expect(wrapper.state('error')).toBe(null)
 	})
 
 })
