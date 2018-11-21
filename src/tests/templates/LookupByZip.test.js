@@ -203,3 +203,162 @@ describe('<LookupByZip> Link functionality when there is weather data', () => {
 // 	})
 
 // })
+
+describe('directly invoking handleZip', () => {
+
+	it('sets zip in state with user input', () => {
+		const wrapper = shallow(<LookupByZip />)
+		const instance = wrapper.instance()
+		const value = {
+			target: {
+				value: '12345'
+			}
+		}
+		instance.handleZip(value)
+		expect(wrapper.state('zip')).toBe('12345')
+	})
+
+})
+
+// e.preventDefault is not a function
+// describe('directly invoking handleKeyPress', () => {
+
+// 	let e
+// 	let preventDefault
+
+// 	beforeEach(() => {
+// 		document.getSelection = () => {
+// 			return ''
+// 		}
+// 		e = {}
+// 		preventDefault = jest.fn()
+// 	})
+
+// 	it('calls getWeather() when user presses "Enter"', () => {
+// 		const wrapper = shallow(<LookupByZip />)
+// 		const instance = wrapper.instance()
+// 		const value1 = {
+// 			target: {
+// 				value: 13
+// 			}
+// 		}
+// 		const value2 = {
+// 			target: {
+// 				value: 'Enter'
+// 			}
+// 		}
+// 		jest.spyOn(instance, 'getWeather')
+// 		instance.handleKeyPress(value1)
+// 		expect(instance.getWeather).toHaveBeenCalledTimes(1)
+// 		instance.handleKeyPress(value2)
+// 		expect(instance.getWeather).toHaveBeenCalledTimes(2)
+// 	})
+
+// })
+
+describe('directly invoking clearError()', () => {
+
+	it('sets state in order to ready the form for a new zip', () => {
+		const wrapper = shallow(<LookupByZip />)
+		const instance = wrapper.instance()
+		wrapper.setState({
+			error: {
+				message: 'error'
+			},
+			searchClicked: true
+		})
+		instance.clearError()
+		expect(wrapper.state('error')).toBe(null)
+		expect(wrapper.state('searchClicked')).toBe(false)
+	})
+
+})
+
+describe('directly invoking handleClick()', () => {
+
+	it('calls startSpinner() and getWeather()', () => {
+		const wrapper = shallow(<LookupByZip />)
+		const instance = wrapper.instance()
+		jest.spyOn(instance, 'startSpinner')
+		jest.spyOn(instance, 'getWeather')
+		instance.handleClick()
+		expect(instance.startSpinner).toHaveBeenCalled()
+		expect(instance.getWeather).toHaveBeenCalled()
+	})
+
+})
+
+describe('directly invoking startSpinner()', () => {
+
+	it('sets searchClicked in state to true', () => {
+		const wrapper = shallow(<LookupByZip />)
+		const instance = wrapper.instance()
+		instance.startSpinner()
+		expect(wrapper.state('searchClicked')).toBe(true)
+	})
+
+})
+
+// describe('directly invoking getWeather()', () => {
+
+// 	it('', () => {
+		
+// 	})
+
+// })
+
+describe('directly invoking setWeatherInfo()', () => {
+
+	it('sets state correctly with a successful call', () => {
+		const wrapper = shallow(<LookupByZip />)
+		const instance = wrapper.instance()
+		const result = {
+			name: 'Testopia'
+		}
+		wrapper.setState({
+			zip: '12345',
+			searchClicked: true
+		})
+		instance.setWeatherInfo(result)
+		expect(wrapper.state('result')).toBe(result)
+		expect(wrapper.state('zip')).toBe('')
+		expect(wrapper.state('searchClicked')).toBe(false)
+	})
+
+	it('sets state correctly with a bad zip', () => {
+		const wrapper = shallow(<LookupByZip />)
+		const instance = wrapper.instance()
+		const result = {
+			cod: 'error'
+		}
+		wrapper.setState({
+			zip: '99999',
+			searchClicked: true
+		})
+		instance.setWeatherInfo(result)
+		expect(wrapper.state('result')).toBe(result)
+		expect(wrapper.state('zip')).toBe('99999')
+		expect(wrapper.state('searchClicked')).toBe(false)	
+	})
+
+})
+
+describe('directly invoking clearWeather()', () => {
+
+	it('sets state in preparation for a fresh API call', () => {
+		const wrapper = shallow(<LookupByZip />)
+		const instance = wrapper.instance()
+		wrapper.setState({
+			result: {
+				name: 'Testview'
+			},
+			error: {
+				message: 'some error'
+			}
+		})
+		instance.clearWeather()
+		expect(wrapper.state('result')).toEqual({})
+		expect(wrapper.state('error')).toBe(null)
+	})
+
+})
