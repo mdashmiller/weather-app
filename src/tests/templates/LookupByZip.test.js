@@ -121,7 +121,7 @@ describe('<Search> functionality with no weather data', () => {
 	// can't get this one to work
 	// it('calls handleZip() with user input', () => {
 	// 	const handleZip = jest.fn()
-	// 	const wrapper = shallow(<LookupByZip onChange={handleZip} />)
+	// 	const wrapper = shallow(<LookupByZip />)
 	// 	wrapper.find(Search).simulate('change', { target: { value: '12345' } })
 	// 	expect(handleZip).toHaveBeenCalled()
 	// })
@@ -141,8 +141,12 @@ describe('<Search> functionality with no weather data', () => {
 	// 	expect(handleKeyPress).toHaveBeenCalled()
 	// })
 
+	// mock function not called
 	// it('calls clearError() with user click', () => {
-		
+	// 	const wrapper = shallow(<LookupByZip />)
+	// 	const clearError = jest.fn()
+	// 	wrapper.find(Search).simulate('click')
+	// 	expect(clearError).toHaveBeenCalled()
 	// })
 
 	it('clears error from state with user click', () => {
@@ -153,4 +157,49 @@ describe('<Search> functionality with no weather data', () => {
 		expect(wrapper.state('error')).toBe(null)
 	})
 
+	it('has #error-box when user enters a bad zip', () => {
+		const wrapper = shallow(<LookupByZip />)
+		wrapper.setState({
+			result: {
+				cod: 'error'
+			}
+		})
+		expect(wrapper.find(Search).prop('id')).toBe('error-box')
+	})
+
 })
+
+// describe('<Button> functionality with no weather data', () => {
+
+// 	// mock function is not called
+// 	it('calls handleClick() when clicked', () => {
+// 		const wrapper = shallow(<LookupByZip />)
+// 		const handleClick = jest.fn()
+// 		wrapper.find(Button).simulate('click')
+// 		expect(handleClick).toHaveBeenCalled()
+// 	})
+
+// })
+
+describe('<LookupByZip> Link functionality when there is weather data', () => {
+
+	it('contains a link to get weather by geolocation', () => {
+		const wrapper = shallow(<LookupByZip />)
+		wrapper.setState({
+			result: {
+				name: 'Testville'
+			}
+		})
+		expect(wrapper.find(Link).prop('to')).toBe('/lookup-by-geoloc')
+	})
+
+})
+
+// describe('<Search> functionality when there is weather data', () => {
+
+
+// 	it('calls clearWeather() when clicked', () => {
+
+// 	})
+
+// })
