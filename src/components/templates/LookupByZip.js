@@ -33,10 +33,10 @@ class LookupByZip extends Component {
 		// by zipcode input and limits the quantity 
 		// and quality of chars the user can enter
 		const numOfChars = e.target.value.length	
-		const char = e.key || e.keyCode
+		const char = e.key
 		const selection = document.getSelection().toString()
 		// submit with enter key
-		if (char === 13 || char === 'Enter' ) {
+		if (char === 'Enter' ) {
 			this.getWeather()
 		}
 		// allows a max of 5 chars and allows user
@@ -54,13 +54,13 @@ class LookupByZip extends Component {
 			// backspace, left, right, enter, tab, home, end, 
 			// and return keys can be used regardless of 
 			// number of chars enterd
-			if (char === 8 || char === 'Backspace'
-				|| char === 37 || char === 'ArrowLeft' || char === 'Left'
-				|| char === 39 || char === 'ArrowRight' || char === 'Right'
-				|| char === 13 || char === 'Enter'
-				|| char === 9 || char === 'Tab'
-				|| char === 36 || char === 'Home'
-				|| char === 35 || char === 'End') {
+			if (char === 'Backspace'
+				|| char === 'ArrowLeft' || char === 'Left'
+				|| char === 'ArrowRight' || char === 'Right'
+				|| char === 'Enter'
+				|| char === 'Tab'
+				|| char === 'Home'
+				|| char === 'End') {
 				return
 			} else {
 				e.preventDefault()
