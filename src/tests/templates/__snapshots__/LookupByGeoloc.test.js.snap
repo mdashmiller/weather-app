@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LookupByGeoloc /> basic rendering has a valid snapshot 1`] = `
+<div
+  className="sc-bwzfXH kUBsGr"
+>
+  <h2
+    className="geoloc-load-title"
+  >
+    Getting Weather...
+  </h2>
+  <i
+    className="fas fa-spinner fa-2x geoloc-spinner"
+  />
+</div>
+`;
