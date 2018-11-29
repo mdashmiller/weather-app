@@ -39,27 +39,28 @@ describe('<LookupByGeoloc /> basic rendering', () => {
 
 })
 
-describe('<LookupByGeoloc /> rendering with no weather data', () => {
+// describe('<LookupByGeoloc /> rendering with no weather data', () => {
 
-	let wrapper
+// 	let wrapper
 
-	beforeEach(() => {
-		wrapper = shallow(<LookupByGeoloc />)
-	})
+// 	beforeEach(() => {
+// 		wrapper = shallow(<LookupByGeoloc />)
+// 		wrapper.setState({ result: {} })
+// 	})
 
-	it('renders 1 <Frame> component', () => {
-		expect(wrapper.find(Frame).length).toBe(1)
-	})
+// 	it('renders 1 <Frame> component', () => {
+// 		expect(wrapper.find(Frame).length).toBe(1)
+// 	})
 
-	it('renders 1 <h2> element', () => {
-		expect(wrapper.find('h2').length).toBe(1)
-	})
+// 	it('renders 1 <h2> element', () => {
+// 		expect(wrapper.find('h2').length).toBe(1)
+// 	})
 
-	it('renders 1 <i> element', () => {
-		expect(wrapper.find('i').length).toBe(1)
-	})
+// 	it('renders 1 <i> element', () => {
+// 		expect(wrapper.find('i').length).toBe(1)
+// 	})
 
-})
+// })
 
 describe('<LookupByGeoloc /> rendering with an error', () => {
 
@@ -103,14 +104,14 @@ describe('<LookupByGeoloc /> rendering with geolocation disabled', () => {
 describe('<LookupByGeoloc /> rendering with weather data', () => {
 
 	let wrapper
-	let result
+	// let result
 
 	beforeEach(() => {
 		wrapper = shallow(<LookupByGeoloc />)
-		result = {
-			name: 'Test Town'
-		}
-		wrapper.setState({ result })
+		// result = {
+		// 	name: 'Test Town'
+		// }
+		// wrapper.setState({ result })
 	})
 
 	it('renders 1 <Frame> component', () => {
@@ -169,14 +170,55 @@ describe('directly invoking componentDidMount', () => {
 
 })
 
-// describe('directly invoking getLocation', () => {
+describe('testing getLocation', () => {
 
-// 	it('calls setCoords when geolocation is enabled', () => {
+	it('calls setCoords when geolocation is enabled', () => {
+		const wrapper = shallow(<LookupByGeoloc />)
+		const instance = wrapper.instance()
+		jest.spyOn(instance, 'setCoords')
+		instance.getLocation()
+		expect(instance.setCoords).toHaveBeenCalled()
+	})
+
+	// it('calls geoError when geolocation is disabled', () => {
+	
+	// })
+
+})
+
+describe('directly invoking setCoords', () => {
+
+	it('calls getWeather', () => {
+		const wrapper = shallow(<LookupByGeoloc />)
+		// const instance = wrapper.instance()
+		// const position = {
+		// 	coords: {
+		// 		latitude: 29.8,
+		// 		longitude: 95.4
+		// 	}
+		// }
+		// jest.spyOn(instance, 'getWeather')
+		// instance.setCoords(position)
+		const getWeather = jest.fn()
+		expect(getWeather).toHaveBeenCalled()
+	})
+
+})
+
+// describe('directly invoking getWeather', () => {
+
+// 	it('calls getWeather', () => {
 // 		const wrapper = shallow(<LookupByGeoloc />)
 // 		const instance = wrapper.instance()
-// 		jest.spyOn(instance, 'setCoords')
-// 		instance.getLocation()
-// 		expect(instance.setCoords).toHaveBeenCalled()
+// 		const position = {
+// 			coords: {
+// 				latitude: 29.8,
+// 				longitude: 95.4
+// 			}
+// 		}
+// 		jest.spyOn(instance, 'getWeather')
+// 		instance.setCoords(position)
+// 		expect(instance.getWeather).toHaveBeenCalled()
 // 	})
 
 // })
