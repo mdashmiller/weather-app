@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
-import config from '../../config'
 import { Link } from 'react-router-dom'
+import openWeatherMap from '../../services/openWeatherMap'
 import Weather from './Weather'
 import ErrorMsg from './ErrorMsg'
 import Frame from '../ui/Frame'
 import Search from '../ui/Search'
 import Button from '../ui/Button'
 import Title from '../ui/Title'
-
-// Open Weather Map API url details
-const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
-const KEY = config.key
 
 class LookupByZip extends Component {
 
@@ -93,12 +89,16 @@ class LookupByZip extends Component {
 
 	getWeather = () => {
 		// call weather API with zipcode
-		const ZIP = `zip=${this.state.zip}`	
-		const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
-		fetch(urlZip)
+		openWeatherMap(undefined, undefined, this.state.zip)
 			.then(response => response.json())
 			.then(result => this.setWeatherInfo(result))
 			.catch(error => this.setState({ error }))
+		// const ZIP = `zip=${this.state.zip}`	
+		// const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
+		// fetch(urlZip)
+		// 	.then(response => response.json())
+		// 	.then(result => this.setWeatherInfo(result))
+		// 	.catch(error => this.setState({ error }))
 	}
 
 	setWeatherInfo = result => {

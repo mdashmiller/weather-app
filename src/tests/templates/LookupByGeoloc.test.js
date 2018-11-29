@@ -101,32 +101,32 @@ describe('<LookupByGeoloc /> rendering with geolocation disabled', () => {
 
 })
 
-describe('<LookupByGeoloc /> rendering with weather data', () => {
+// describe('<LookupByGeoloc /> rendering with weather data', () => {
 
-	let wrapper
-	// let result
+// 	let wrapper
+// 	// let result
 
-	beforeEach(() => {
-		wrapper = shallow(<LookupByGeoloc />)
-		// result = {
-		// 	name: 'Test Town'
-		// }
-		// wrapper.setState({ result })
-	})
+// 	beforeEach(() => {
+// 		wrapper = shallow(<LookupByGeoloc />)
+// 		// result = {
+// 		// 	name: 'Test Town'
+// 		// }
+// 		// wrapper.setState({ result })
+// 	})
 
-	it('renders 1 <Frame> component', () => {
-		expect(wrapper.find(Frame).length).toBe(1)
-	})	
+// 	it('renders 1 <Frame> component', () => {
+// 		expect(wrapper.find(Frame).length).toBe(1)
+// 	})	
 
-	it('renders 1 <Weather> component', () => {
-		expect(wrapper.find(Weather).length).toBe(1)
-	})
+// 	it('renders 1 <Weather> component', () => {
+// 		expect(wrapper.find(Weather).length).toBe(1)
+// 	})
 
-	it('renders 1 <Search> component', () => {
-		expect(wrapper.find(Search).length).toBe(1)
-	})	
+// 	it('renders 1 <Search> component', () => {
+// 		expect(wrapper.find(Search).length).toBe(1)
+// 	})	
 
-})
+// })
 
 describe('<LookupByGeoloc> Link functionality when there is weather data', () => {
 
@@ -186,24 +186,15 @@ describe('testing getLocation', () => {
 
 })
 
-describe('directly invoking setCoords', () => {
+// describe('directly invoking setCoords', () => {
 
-	it('calls getWeather', () => {
-		const wrapper = shallow(<LookupByGeoloc />)
-		// const instance = wrapper.instance()
-		// const position = {
-		// 	coords: {
-		// 		latitude: 29.8,
-		// 		longitude: 95.4
-		// 	}
-		// }
-		// jest.spyOn(instance, 'getWeather')
-		// instance.setCoords(position)
-		const getWeather = jest.fn()
-		expect(getWeather).toHaveBeenCalled()
-	})
+// 	it('calls getWeather', () => {
+// 		const wrapper = shallow(<LookupByGeoloc />)
+// 		const instance = wrapper.instance()
+// 		expect(getWeather).toHaveBeenCalled()
+// 	})
 
-})
+// })
 
 // describe('directly invoking getWeather', () => {
 
