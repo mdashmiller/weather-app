@@ -15,8 +15,8 @@ const KEY = config.key
 class LookupByGeoloc extends Component {
 
 	state = {
-		lat: '',
-		lon: '',
+		lat: null,
+		lon: null,
 		result: {},
 		error: null,
 		noGeoLocation: false
