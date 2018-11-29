@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
-import config from '../../config'
 import { Link } from 'react-router-dom'
+import openWeatherMap from '../../services/openWeatherMap'
 import Weather from './Weather'
 import NoGeo from  './NoGeo'
 import ErrorMsg from './ErrorMsg'
 import Frame from '../ui/Frame'
 import Search from  '../ui/Search'
 import Title from '../ui/Title'
-
-// Open Weather Map API url details
-const PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?'
-const KEY = config.key
 
 class LookupByGeoloc extends Component {
 
@@ -45,13 +41,10 @@ class LookupByGeoloc extends Component {
 
 	getWeather = () => {
 		// call weather API with coordinates
-		const COORDS = `lat=${this.state.lat}&lon=${this.state.lon}`
-		const urlCoords = `${PATH_BASE}${COORDS}&APPID=${KEY}`
-		fetch(urlCoords)
+		openWeatherMap(this.state.lat, this.state.lon, undefined)
 			.then(response => response.json())
 			.then(result => this.setWeatherInfo(result))
-			.catch(error => this.setState({ error }))
-		
+			.catch(error => this.setState({ error }))	
 	}
 
 	setWeatherInfo = result => 
