@@ -1,3 +1,4 @@
+// allows geolocation to return coordinates for each test
 const mockGeolocation = {
 	getCurrentPosition: jest.fn(success => Promise.resolve(success({
   		coords: {
@@ -9,8 +10,12 @@ const mockGeolocation = {
 
 global.navigator.geolocation = mockGeolocation
 
-// const mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
-// 	name: 'Mock Town'
-// }))
+// mocks a call to the openWeatherMap API
+const fakeResponse = { name: 'Mock Town' }
+const mockJsonPromise = Promise.resolve(fakeResponse)
 
-// global.fetch = mockFetch
+const mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
+	json: () => mockJsonPromise
+}))
+
+global.fetch = mockFetch

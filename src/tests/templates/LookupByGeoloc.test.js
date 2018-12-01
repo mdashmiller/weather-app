@@ -15,36 +15,34 @@ import Weather from '../../components/templates/Weather'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-// jest.mock('../../services/openWeatherMap')
+describe('<LookupByGeoloc /> basic rendering', () => {
 
-// describe('<LookupByGeoloc /> basic rendering', () => {
+	it('renders without crashing', done => {
+	  	const div = document.createElement('div')
+	  	ReactDOM.render(
+	  		<BrowserRouter>
+	  			<LookupByGeoloc />
+	  		</BrowserRouter>,
+	  	div)
 
-// 	it('renders without crashing', done => {
-// 	  	const div = document.createElement('div')
-// 	  	ReactDOM.render(
-// 	  		<BrowserRouter>
-// 	  			<LookupByGeoloc />
-// 	  		</BrowserRouter>,
-// 	  	div)
-
-// 	  	setTimeout(() => {
-// 	  		ReactDOM.unmountComponentAtNode(div)
-// 	  		done()
-// 	  	})
+	  	setTimeout(() => {
+	  		ReactDOM.unmountComponentAtNode(div)
+	  		done()
+	  	})
 	  	
-// 	})
+	})
 
-// 	test('has a valid snapshot', () => {
-// 		const component = renderer.create(
-// 			<BrowserRouter>
-// 				<LookupByGeoloc />
-// 			</BrowserRouter>
-// 		)
-// 		let tree = component.toJSON()
-// 		expect(tree).toMatchSnapshot()
-// 	})
+	test('has a valid snapshot', () => {
+		const component = renderer.create(
+			<BrowserRouter>
+				<LookupByGeoloc />
+			</BrowserRouter>
+		)
+		let tree = component.toJSON()
+		expect(tree).toMatchSnapshot()
+	})
 
-// })
+})
 
 // describe('<LookupByGeoloc /> rendering with no weather data', () => {
 
@@ -164,25 +162,25 @@ Enzyme.configure({ adapter: new Adapter() })
 
 // })
 
-// describe('weather data fetched on mount', () => {
+describe('weather data fetched on mount', () => {
 
-// 	it('sets the API result in state', done => {
-// 		// const fakeData = {
-// 		// 	name: 'Mock Town'
-// 		// }
-// 		const wrapper = shallow(<LookupByGeoloc />)
+	it('sets the API result in state', done => {
+		const fakeData = {
+			name: 'Mock Town'
+		}
+		const wrapper = shallow(<LookupByGeoloc />)
 
-// 		setTimeout(() => {
-// 			wrapper.update()
-// 			const state = wrapper.instance().state
-// 			expect(state.result).toEqual({})
+		setTimeout(() => {
+			wrapper.update()
+			const state = wrapper.instance().state
+			expect(state.result).toEqual(fakeData)
 
-// 			done()
-// 		})
+			done()
+		})
 
-// 	})
+	})
 
-// })
+})
 
 // describe('testing getLocation', () => {
 
@@ -214,16 +212,16 @@ Enzyme.configure({ adapter: new Adapter() })
 
 // })
 
-describe('checking setupTests', () => {
+// describe('checking setupTests', () => {
 
-	it('sets lat and lon in state', () => {
-		const wrapper = shallow(<LookupByGeoloc />)
-		expect(wrapper.state('lat')).toBe(29.8)
-		expect(wrapper.state('lon')).toBe(95.4)
+// 	it('sets lat and lon in state', () => {
+// 		const wrapper = shallow(<LookupByGeoloc />)
+// 		expect(wrapper.state('lat')).toBe(29.8)
+// 		expect(wrapper.state('lon')).toBe(95.4)
 
-	})
+// 	})
 
-})
+// })
 
 // // describe('directly invoking getWeather', () => {
 
