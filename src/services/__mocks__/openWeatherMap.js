@@ -1,5 +1,9 @@
-const fakeResult = {
+const fakeData = {
 	name: 'Mock Town'
 }
 
-export default () => fakeResult
+export default async (lat, lon, zip) => {
+	return await new Promise(resolve => {
+		resolve(fakeData)
+	})
+}
