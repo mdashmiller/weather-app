@@ -8,3 +8,9 @@ const mockGeolocation = {
 }
 
 global.navigator.geolocation = mockGeolocation
+
+// const mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
+// 	name: 'Mock Town'
+// }))
+
+// global.fetch = mockFetch
