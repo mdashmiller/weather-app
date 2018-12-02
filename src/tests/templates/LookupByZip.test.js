@@ -93,7 +93,7 @@ describe('<LookupByZip /> rendering when there is weather data', () => {
 
 	let wrapper
 
-	beforeEach(() => {
+	beforeAll(() => {
 		wrapper = shallow(<LookupByZip />)
 		wrapper.setState({
 			result: {
@@ -112,6 +112,10 @@ describe('<LookupByZip /> rendering when there is weather data', () => {
 
 	it('renders 2 <Search> components', () => {
 		expect(wrapper.find(Search).length).toBe(2)
+	})
+
+	it('renders 1 <Link>', () => {
+		expect(wrapper.find(Link).length).toBe(1)
 	})
 
 })
@@ -141,18 +145,18 @@ describe('<Search> functionality with no weather data', () => {
 	// 	expect(handleKeyPress).toHaveBeenCalled()
 	// })
 
-	// mock function not called
+	// // mock function was not called
 	// it('calls clearError() with user click', () => {
 	// 	const wrapper = shallow(<LookupByZip />)
-	// 	const clearError = jest.fn()
+	// 	const instance = wrapper.instance()
+	// 	jest.spyOn(instance, 'clearError')
 	// 	wrapper.find(Search).simulate('click')
-	// 	expect(clearError).toHaveBeenCalled()
+	// 	expect(instance.clearError).toHaveBeenCalled()
 	// })
 
 	it('clears error from state with user click', () => {
-		const clearError = jest.fn()
 		const wrapper = shallow(<LookupByZip />)
-		wrapper.setState({ error: {} })
+		wrapper.setState({ error: { message: 'error' } })
 		wrapper.find(Search).simulate('click')
 		expect(wrapper.state('error')).toBe(null)
 	})
@@ -174,9 +178,10 @@ describe('<Search> functionality with no weather data', () => {
 // 	// mock function is not called
 // 	it('calls handleClick() when clicked', () => {
 // 		const wrapper = shallow(<LookupByZip />)
-// 		const handleClick = jest.fn()
+// 		const instance = wrapper.instance()
+// 		jest.spyOn(instance, 'handleClick')
 // 		wrapper.find(Button).simulate('click')
-// 		expect(handleClick).toHaveBeenCalled()
+// 		expect(instance.handleClick).toHaveBeenCalled()
 // 	})
 
 // })
@@ -195,14 +200,31 @@ describe('<LookupByZip> Link functionality when there is weather data', () => {
 
 })
 
-// describe('<Search> functionality when there is weather data', () => {
+describe('<Search> functionality when there is weather data', () => {
 
+	// it('calls clearWeather when clicked', () => {
 
-// 	it('calls clearWeather() when clicked', () => {
+	// })
 
-// 	})
+	it('clears result and error from state when clicked', () => {
+		const wrapper = shallow(<LookupByZip />)
+		wrapper.setState({
+			result: {
+				name: 'Testville'
+			}
+		})
+		wrapper.find(Search).at(0).simulate('click')
+		expect(wrapper.state('result')).toEqual({})
+		wrapper.setState({
+			error: {
+				message: 'error'
+			}
+		})
+		wrapper.find(Search).at(0).simulate('click')
+		expect(wrapper.state('error')).toEqual(null)
+	})
 
-// })
+})
 
 describe('directly invoking handleZip', () => {
 
@@ -300,6 +322,8 @@ describe('directly invoking startSpinner()', () => {
 })
 
 // describe('directly invoking getWeather()', () => {
+
+//	jest.mock(openWeatherMap)
 
 // 	it('', () => {
 		

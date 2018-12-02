@@ -49,7 +49,7 @@ describe('<NoGeo /> rendering', () => {
 		expect(wrapper.find('h2').length).toBe(2)
 	})
 
-	it('renders 1 <Link> component', () => {
+	it('renders 1 <Link>', () => {
 		const wrapper = shallow(<NoGeo />)
 		expect(wrapper.find(Link).length).toBe(1)
 	})

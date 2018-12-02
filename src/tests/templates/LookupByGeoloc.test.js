@@ -44,59 +44,68 @@ describe('<LookupByGeoloc /> basic rendering', () => {
 
 })
 
-// not working
-// describe('<LookupByGeoloc /> rendering with no weather data', () => {
+describe('<LookupByGeoloc /> rendering with no weather data', () => {
 
-// 	let wrapper
+	let wrapper
 
-// 	beforeEach(() => {
-// 		wrapper = shallow(<LookupByGeoloc />)
-// 		wrapper.setState({ result: {} })
-// 	})
+	beforeAll(() => {
+		wrapper = shallow(<LookupByGeoloc />)
+	})
 
-// 	it('renders 1 <Frame> component', () => {
-// 		expect(wrapper.find(Frame).length).toBe(1)
-// 	})
+	beforeEach(() => {
+		wrapper.setState({ result: { name: '' } })
+	})
 
-// 	it('renders 1 <h2> element', () => {
-// 		expect(wrapper.find('h2').length).toBe(1)
-// 	})
+	it('renders 1 <Frame> component', () => {
+		expect(wrapper.find(Frame).length).toBe(1)
+	})
 
-// 	it('renders 1 <i> element', () => {
-// 		expect(wrapper.find('i').length).toBe(1)
-// 	})
+	it('renders 1 <h2> element', () => {
+		expect(wrapper.find('h2').length).toBe(1)
+	})
 
-// })
+	it('renders 1 <i> element', () => {
+		expect(wrapper.find('i').length).toBe(1)
+	})
 
-// not working
-// describe('<LookupByGeoloc /> rendering with an error', () => {
+})
 
-// 	let wrapper
-// 	let error
+describe('<LookupByGeoloc /> rendering with an error', () => {
 
-// 	beforeEach(() => {
-// 		wrapper = shallow(<LookupByGeoloc />)
-// 		error = { message: 'error' }
-// 		wrapper.setState({ error })
-// 	})
+	let wrapper
 
-// 	it('renders 1 <Frame> component', () => {
-// 		expect(wrapper.find(Frame).length).toBe(1)
-// 	})
+	beforeAll(() => {
+		wrapper = shallow(<LookupByGeoloc />)
+	})
 
-// 	it('renders 1 <Title> component', () => {
-// 		expect(wrapper.find(Title).length).toBe(1)
-// 	})
+	beforeEach(() => {
+		wrapper.setState({
+			result: {
+				name: ''
+			},
+			error: { 
+				message: 'error' 
+			}
+		})
+	})
 
-// 	it('renders 1 <ErrorMsg> component', () => {
-// 		expect(wrapper.find(ErrorMsg).length).toBe(1)
-// 	})
+	it('renders 1 <Frame> component', () => {
+		expect(wrapper.find(Frame).length).toBe(1)
+	})
 
-// 	it('renders 1 <Search> component', () => {
-// 		expect(wrapper.find(Search).length).toBe(1)
-// 	})
+	it('renders 1 <Title> component', () => {
+		expect(wrapper.find(Title).length).toBe(1)
+	})
 
-// })
+	it('renders 1 <ErrorMsg> component', () => {
+		expect(wrapper.find(ErrorMsg).length).toBe(1)
+	})
+
+	it('renders 1 <Search> component', () => {
+		expect(wrapper.find(Search).length).toBe(1)
+	})
+
+})
 
 describe('<LookupByGeoloc /> rendering with geolocation disabled', () => {
 
@@ -112,7 +121,7 @@ describe('<LookupByGeoloc /> rendering with weather data', () => {
 
 	let wrapper
 
-	beforeEach(() => {
+	beforeAll(() => {
 		wrapper = shallow(<LookupByGeoloc />)
 	})
 
@@ -128,17 +137,25 @@ describe('<LookupByGeoloc /> rendering with weather data', () => {
 		expect(wrapper.find(Search).length).toBe(1)
 	})	
 
+	it('renders 1 <Link>', () => {
+		expect(wrapper.find(Link).length).toBe(1)
+	})
+
 })
 
-// not working
-// describe('<LookupByGeoloc> Link functionality when there is weather data', () => {
+describe('<LookupByGeoloc> Link functionality when there is weather data', () => {
 
-// 	it('contains a <Link> to get weather by zip', () => {
-// 		const wrapper = shallow(<LookupByGeoloc />)
-// 		expect(wrapper.find(Link).prop('to')).toBe('/lookup-by-zip')
-// 	})
+	it('contains a <Link> to get weather by zip', done => {
+		const wrapper = shallow(<LookupByGeoloc />)
 
-// })
+		setTimeout(() => {
+			wrapper.update()
+			expect(wrapper.find(Link).prop('to')).toBe('/lookup-by-zip')
+			done()
+		})
+	})
+
+})
 
 describe('<LookupByGeoloc> Search functionality when there is an error', () => {
 
@@ -156,7 +173,7 @@ describe('<LookupByGeoloc> Search functionality when there is an error', () => {
 
 })
 
-describe('weather data fetched on mount', () => {
+describe('weather data fetched on mount with geolocation enabled', () => {
 
 	it('sets the API result in state', done => {
 		const wrapper = shallow(<LookupByGeoloc />)
@@ -164,7 +181,14 @@ describe('weather data fetched on mount', () => {
 		setTimeout(() => {
 			wrapper.update()
 			const state = wrapper.instance().state
-			expect(state.result.name).toEqual('Mockville')
+
+			expect(state.result.name).toBe('Mockville')
+			expect(state.result.main.temp).toBe(297)
+			expect(state.result.weather[0].description).toBe('all good!')
+			expect(state.result.weather[0].id).toBe(100)
+			expect(state.result.dt).toBe(2)
+			expect(state.result.sys.sunrise).toBe(1)
+			expect(state.result.sys.sunset).toBe(3)
 
 			done()
 		})
@@ -172,3 +196,23 @@ describe('weather data fetched on mount', () => {
 	})
 
 })
+
+// describe('<NoGeo> displayed on mount with geolocation disabled', () => {
+
+// 	jest.mock('geolocationForceError')
+
+// 	it('sets noGeoLocation in state and renders <NoGeo> template', done => {
+// 		const wrapper = shallow(<LookupByGeoloc />)
+
+// 		setTimeout(() => {
+// 			wrapper.update()
+// 			const state = wrapper.instance().state
+
+// 			expect(state.noGeoLocation).toBe(true)
+// 			expect(wrapper.find(NoGeo).length).toBe(1)
+
+// 			done()
+// 		})
+// 	})
+
+// })

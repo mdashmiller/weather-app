@@ -93,12 +93,6 @@ class LookupByZip extends Component {
 			.then(response => response.json())
 			.then(result => this.setWeatherInfo(result))
 			.catch(error => this.setState({ error }))
-		// const ZIP = `zip=${this.state.zip}`	
-		// const urlZip = `${PATH_BASE}${ZIP}&APPID=${KEY}`
-		// fetch(urlZip)
-		// 	.then(response => response.json())
-		// 	.then(result => this.setWeatherInfo(result))
-		// 	.catch(error => this.setState({ error }))
 	}
 
 	setWeatherInfo = result => {
