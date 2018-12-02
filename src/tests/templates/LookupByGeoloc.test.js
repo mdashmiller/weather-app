@@ -44,9 +44,9 @@ describe('<LookupByGeoloc /> basic rendering', () => {
 
 })
 
+// not working
 // describe('<LookupByGeoloc /> rendering with no weather data', () => {
 
-// 	jest.mock('../../services/openWeatherMap')
 // 	let wrapper
 
 // 	beforeEach(() => {
@@ -68,9 +68,9 @@ describe('<LookupByGeoloc /> basic rendering', () => {
 
 // })
 
+// not working
 // describe('<LookupByGeoloc /> rendering with an error', () => {
 
-// 	jest.mock('../../services/openWeatherMap')
 // 	let wrapper
 // 	let error
 
@@ -98,44 +98,40 @@ describe('<LookupByGeoloc /> basic rendering', () => {
 
 // })
 
-// describe('<LookupByGeoloc /> rendering with geolocation disabled', () => {
+describe('<LookupByGeoloc /> rendering with geolocation disabled', () => {
 
-// 	jest.mock('../../services/openWeatherMap')
+	it('renders 1 <NoGeo> component', () => {
+		const wrapper = shallow(<LookupByGeoloc />)
+		wrapper.setState({ noGeoLocation: true })
+		expect(wrapper.find(NoGeo).length).toBe(1)
+	})	
 
-// 	it('renders 1 <NoGeo> component', () => {
-// 		const wrapper = shallow(<LookupByGeoloc />)
-// 		wrapper.setState({ noGeoLocation: true })
-// 		expect(wrapper.find(NoGeo).length).toBe(1)
-// 	})	
+})
 
-// })
+describe('<LookupByGeoloc /> rendering with weather data', () => {
 
-// describe('<LookupByGeoloc /> rendering with weather data', () => {
+	let wrapper
 
-// 	jest.mock('../../services/openWeatherMap')
-// 	let wrapper
+	beforeEach(() => {
+		wrapper = shallow(<LookupByGeoloc />)
+	})
 
-// 	beforeEach(() => {
-// 		wrapper = shallow(<LookupByGeoloc />)
-// 	})
+	it('renders 1 <Frame> component', () => {
+		expect(wrapper.find(Frame).length).toBe(1)
+	})	
 
-// 	it('renders 1 <Frame> component', () => {
-// 		expect(wrapper.find(Frame).length).toBe(1)
-// 	})	
+	it('renders 1 <Weather> component', () => {
+		expect(wrapper.find(Weather).length).toBe(1)
+	})
 
-// 	it('renders 1 <Weather> component', () => {
-// 		expect(wrapper.find(Weather).length).toBe(1)
-// 	})
+	it('renders 1 <Search> component', () => {
+		expect(wrapper.find(Search).length).toBe(1)
+	})	
 
-// 	it('renders 1 <Search> component', () => {
-// 		expect(wrapper.find(Search).length).toBe(1)
-// 	})	
+})
 
-// })
-
+// not working
 // describe('<LookupByGeoloc> Link functionality when there is weather data', () => {
-
-// 	jest.mock('../../services/openWeatherMap')
 
 // 	it('contains a <Link> to get weather by zip', () => {
 // 		const wrapper = shallow(<LookupByGeoloc />)
@@ -144,36 +140,31 @@ describe('<LookupByGeoloc /> basic rendering', () => {
 
 // })
 
-// describe('<LookupByGeoloc> Search functionality when there is an error', () => {
+describe('<LookupByGeoloc> Search functionality when there is an error', () => {
 
-// 	jest.mock('../../services/openWeatherMap')
+	it('reloads the page when clicked', () => {
+		const wrapper = shallow(<LookupByGeoloc />)
+		wrapper.setState({
+			error: {
+				message: 'error'
+			}
+		})
+		window.location.reload = jest.fn()
+		wrapper.find(Search).simulate('click')
+		expect(window.location.reload).toHaveBeenCalled()
+	})
 
-// 	it('reloads the page when clicked', () => {
-// 		const wrapper = shallow(<LookupByGeoloc />)
-// 		wrapper.setState({
-// 			error: {
-// 				message: 'error'
-// 			}
-// 		})
-// 		window.location.reload = jest.fn()
-// 		wrapper.find(Search).simulate('click')
-// 		expect(window.location.reload).toHaveBeenCalled()
-// 	})
-
-// })
+})
 
 describe('weather data fetched on mount', () => {
 
 	it('sets the API result in state', done => {
-		const fakeData = {
-			name: 'Mock Town'
-		}
 		const wrapper = shallow(<LookupByGeoloc />)
 
 		setTimeout(() => {
 			wrapper.update()
 			const state = wrapper.instance().state
-			expect(state.result).toEqual(fakeData)
+			expect(state.result.name).toEqual('Mockville')
 
 			done()
 		})
@@ -181,62 +172,3 @@ describe('weather data fetched on mount', () => {
 	})
 
 })
-
-// describe('testing getLocation', () => {
-
-// 	it('calls setCoords when geolocation is enabled', () => {
-// 		const wrapper = shallow(<LookupByGeoloc />)
-// 		const instance = wrapper.instance()
-// 		jest.spyOn(instance, 'setCoords')
-// 		instance.getLocation()
-// 		expect(instance.setCoords).toHaveBeenCalled()
-// 	})
-
-// 	// it('calls geoError when geolocation is disabled', () => {
-	
-// 	// })
-
-// })
-
-// describe('calling getWeather', () => {
-
-// 	jest.mock('../../services/openWeatherMap')
-
-// 	it('calls getWeather', () => {
-// 		const wrapper = shallow(<LookupByGeoloc />)
-// 		const instance = wrapper.instance()
-// 		jest.spyOn(instance, 'getWeather')
-// 		instance.componentDidMount()
-// 		expect(instance.getWeather).toHaveBeenCalled()
-// 	})
-
-// })
-
-// describe('checking setupTests', () => {
-
-// 	it('sets lat and lon in state', () => {
-// 		const wrapper = shallow(<LookupByGeoloc />)
-// 		expect(wrapper.state('lat')).toBe(29.8)
-// 		expect(wrapper.state('lon')).toBe(95.4)
-
-// 	})
-
-// })
-
-// // describe('directly invoking getWeather', () => {
-
-// // 	it('calls getWeather', () => {
-// // 		const wrapper = shallow(<LookupByGeoloc />)
-// // 		const instance = wrapper.instance()
-// // 		const position = {
-// // 			coords: {
-// // 				latitude: 29.8,
-// // 				longitude: 95.4
-// // 			}
-// // 		}
-// // 		jest.spyOn(instance, 'getWeather')
-// // 		instance.setCoords(position)
-// // 		expect(instance.getWeather).toHaveBeenCalled()
-// // 	})
-
-// // })
