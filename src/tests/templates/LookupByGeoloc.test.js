@@ -202,22 +202,10 @@ describe('weather data fetched on mount with geolocation enabled', () => {
 
 })
 
-// describe('<NoGeo> displayed on mount with geolocation disabled', () => {
-
-// 	jest.mock('geolocationForceError')
-
-// 	it('sets noGeoLocation in state and renders <NoGeo> template', done => {
-// 		const wrapper = shallow(<LookupByGeoloc />)
-
-// 		setTimeout(() => {
-// 			wrapper.update()
-// 			const state = wrapper.instance().state
-
-// 			expect(state.noGeoLocation).toBe(true)
-// 			expect(wrapper.find(NoGeo).length).toBe(1)
-
-// 			done()
-// 		})
+// describe('functionality on mount with geolocation disabled', () => {
+	
+// 	it('calls geoError', () => {
+		
 // 	})
 
 // })
