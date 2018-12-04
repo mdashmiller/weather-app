@@ -112,6 +112,7 @@ describe('<LookupByGeoloc /> rendering with geolocation disabled', () => {
 	it('renders 1 <NoGeo> component', () => {
 		const wrapper = shallow(<LookupByGeoloc />)
 		wrapper.setState({ noGeoLocation: true })
+
 		expect(wrapper.find(NoGeo).length).toBe(1)
 	})	
 
@@ -150,7 +151,9 @@ describe('<LookupByGeoloc> Link functionality when there is weather data', () =>
 
 		setTimeout(() => {
 			wrapper.update()
+
 			expect(wrapper.find(Link).prop('to')).toBe('/lookup-by-zip')
+
 			done()
 		})
 	})
@@ -167,7 +170,9 @@ describe('<LookupByGeoloc> Search functionality when there is an error', () => {
 			}
 		})
 		window.location.reload = jest.fn()
+
 		wrapper.find(Search).simulate('click')
+		
 		expect(window.location.reload).toHaveBeenCalled()
 	})
 

@@ -11,6 +11,12 @@ Enzyme.configure({ adapter: new Adapter() })
 
 describe('<Title /> rendering', () => {
 
+	let wrapper
+
+	beforeAll(() => {
+		wrapper = shallow(<Title />)
+	})
+
 	it('renders without crashing', () => {
 	  	const div = document.createElement('div')
 	  	ReactDOM.render(
@@ -32,17 +38,14 @@ describe('<Title /> rendering', () => {
 	})
 
 	it('renders 1 <Link> component', () => {
-		const wrapper = shallow(<Title />)
 		expect(wrapper.find(Link).length).toBe(1)
 	})
 
 	it('renders 1 <h1> element', () => {
-		const wrapper = shallow(<Title />)
 		expect(wrapper.find('h1').length).toBe(1)
 	})
 
 	it('renders 1 <span> element', () => {
-		const wrapper = shallow(<Title />)
 		expect(wrapper.find('span').length).toBe(1)
 	})
 
@@ -52,6 +55,7 @@ describe('<Title /> Link functionality', () => {
 	
 	it('contains a <Link> to "/"', () => {
 		const wrapper = shallow(<Title />)
+		
 		expect(wrapper.find(Link).prop('to')).toBe('/')
 	})
 
