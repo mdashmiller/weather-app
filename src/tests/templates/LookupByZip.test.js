@@ -148,6 +148,7 @@ describe('<Search> functionality with no weather data', () => {
 	})
 
 	it('calls handleKeyPress() when user types', () => {
+		document.getSelection = jest.fn().mockReturnValue('')
 		const event = {
 			target: { value: 9021 },
 			key: '0',
@@ -284,6 +285,7 @@ describe('invoking handleKeyPress', () => {
 	beforeEach(() => {
 		wrapper = shallow(<LookupByZip />)
 		instance = wrapper.instance()
+		document.getSelection = jest.fn().mockReturnValue('')
 	})
 
 	it('calls getWeather() when user presses "Enter"', () => {
@@ -312,9 +314,33 @@ describe('invoking handleKeyPress', () => {
 		// expect(event.preventDefault).not.toHaveBeenCalled()
 	})
 
-	// it('allows replacement of highlighted chars with [0-9]', () => {
+	it('allows replacement of highlighted chars with [0-9]', () => {
+		document.getSelection = jest.fn().mockReturnValue('12345')
+		const event = {
+			target: { value: 12345 },
+			key: '0',
+			preventDefault: jest.fn()
+		}
 
-	// })
+		jest.spyOn(instance, 'handleKeyPress')
+		wrapper.find(Search).simulate('keypress', event)
+
+		expect(instance.handleKeyPress).toHaveReturned()
+		expect(event.preventDefault).not.toHaveBeenCalled()
+	})
+
+	it('calls preventDefault if chars are highlighted and user enters != [0-9]', () => {
+		document.getSelection = jest.fn().mockReturnValue('12345')
+		const event = {
+			target: { value: 12345 },
+			key: 'a',
+			preventDefault: jest.fn()
+		}
+
+		wrapper.find(Search).simulate('keypress', event)
+
+		expect(event.preventDefault).toHaveBeenCalled()
+	})
 
 	it('calls e.preventDefault if user enters anything except [0-9]', () => {
 		const event = {

@@ -36,8 +36,3 @@ const mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
 }))
 
 global.fetch = mockFetch
-
-// return an empty string for document.getSelection()
-const mockSelection = jest.fn().mockReturnValue('')
-
-global.document.getSelection = mockSelection
