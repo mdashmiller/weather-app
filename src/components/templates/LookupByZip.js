@@ -39,9 +39,7 @@ class LookupByZip extends Component {
 		// to replace any chars that are highlighted
 		if (numOfChars < 5 || selection !== '') {
 			// input will only accept [0 - 9]
-			if (char >= 48 && char <= 57) {
-				return
-			} else if (char >= 0 && char <= 9) {
+			if (char >= 0 && char <= 9) {
 				return
 			} else {
 				e.preventDefault()
@@ -140,9 +138,9 @@ class LookupByZip extends Component {
 						value={zip}
 						autoFocus
 						short
-						onChange={this.handleZip}
-						onKeyPress={this.handleKeyPress}
-						onClick={this.clearError}
+						onChange={e => this.handleZip(e)}
+						onKeyPress={e => this.handleKeyPress(e)}
+						onClick={() => this.clearError()}
 						id={ result.cod ? 'error-box' : undefined }
 					/>
 					{
@@ -151,7 +149,7 @@ class LookupByZip extends Component {
 								<i className="fas fa-spinner fa-2x zip-spinner">
 								</i>	
 							) : (
-								<Button onClick={this.handleClick}>
+								<Button onClick={() => this.handleClick()}>
 									Go
 								</Button>
 							)
@@ -179,7 +177,7 @@ class LookupByZip extends Component {
 						type="text"
 						placeholder="&#xf002; Change Location"
 						value={zip}
-						onClick={this.clearWeather}
+						onClick={() => this.clearWeather()}
 						lookUp
 					/>
 					<Link to='/lookup-by-geoloc'>			    	
