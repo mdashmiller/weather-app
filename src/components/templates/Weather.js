@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import WeatherIcon from '../ui/WeatherIcon'
 import ThermoIcon from '../ui/ThermoIcon'
+import PropTypes from 'prop-types'
 
 class Weather extends Component {
 
@@ -9,7 +10,7 @@ class Weather extends Component {
 		place: '',
 		temp: '',
 		description: '', 
-		codition: ''
+		codition: null
 	}
 
 	// component methods
@@ -34,9 +35,8 @@ class Weather extends Component {
 	convertToFahrenheit = k => {
 		// takes a temperature in Kelvin
 		// and returns it in Fahrenheit
-		const floatK = parseFloat(k)
 		return (
-			(1.8 * (floatK - 273)) + 32
+			(1.8 * (k - 273)) + 32
 		).toFixed(1)
 	}
 
@@ -94,6 +94,26 @@ class Weather extends Component {
 			</div>
 		)
 	}
+}
+
+Weather.propTypes = {
+	result: PropTypes.shape({
+		name: PropTypes.string,
+		main: PropTypes.shape({
+			temp: PropTypes.number
+		}),
+		weather: PropTypes.arrayOf(
+			PropTypes.shape({
+				description: PropTypes.string,
+				id: PropTypes.number
+			})
+		),
+		dt: PropTypes.number,
+		sys: PropTypes.shape({
+			sunrise: PropTypes.number,
+			sunset: PropTypes.number
+		})
+	})
 }
 
 export default Weather

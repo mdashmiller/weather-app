@@ -34,19 +34,19 @@ describe('<ThermoIcon /> displays proper className for each temp category', () =
 	const thermoCold = "fas fa-thermometer-empty fa-3x"
 
 	it('has className {thermoCool} when temp > 32 && temp < 69', () => {
-		const wrapper = shallow(<ThermoIcon temp={50} />)
+		const wrapper = shallow(<ThermoIcon temp={'50'} />)
 
 		expect(wrapper.find(Icon).prop('className')).toBe(thermoCool)
 	})
 
 	it('has className {thermoWarm} when temp >= 69 && temp < 86', () => {
-		const wrapper = shallow(<ThermoIcon temp={75} />)
+		const wrapper = shallow(<ThermoIcon temp={'75'} />)
 
 		expect(wrapper.find(Icon).prop('className')).toBe(thermoWarm)
 	})
 
 	it('has className {thermoHot} when temp >= 86', () => {
-		const wrapper = shallow(<ThermoIcon temp={90} />)
+		const wrapper = shallow(<ThermoIcon temp={'90'} />)
 
 		expect(wrapper.find(Icon).prop('className')).toBe(thermoHot)
 	})

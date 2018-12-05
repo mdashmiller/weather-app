@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from './Icon'
+import PropTypes from 'prop-types'
 
 // weather-dependent icon details
 const thermoHot = "fas fa-thermometer-full fa-3x"
@@ -19,6 +20,10 @@ const ThermoIcon = ({ temp }) => {
 	} else {
 		return <Icon className={thermoCold}></Icon>
 	}
+}
+
+ThermoIcon.propTypes = {
+	temp: PropTypes.string
 }
 
 export default ThermoIcon
