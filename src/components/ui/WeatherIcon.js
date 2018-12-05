@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from './Icon'
+import PropTypes from 'prop-types'
 
 const WeatherIcon = ({ code, day }) => {
 	// determines whether to display a
@@ -26,5 +27,10 @@ const WeatherIcon = ({ code, day }) => {
 	}
 	return <Icon className={celestialBody}></Icon>
 }
-	
+
+WeatherIcon.propTypes = {
+	code: PropTypes.number,
+	day: PropTypes.bool
+}
+
 export default WeatherIcon

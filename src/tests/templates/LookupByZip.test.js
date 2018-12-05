@@ -14,6 +14,25 @@ import Weather from '../../components/templates/Weather'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+// fake data from API call
+const result = {
+	name: 'Test City',
+	main: {
+		temp: 297
+	},
+	weather: [
+		{
+			description: 'all good!',
+			id: 100
+		}
+	],
+	dt: 2,
+	sys: {
+		sunrise: 1,
+		sunset: 3
+	}
+}
+
 describe('<LookupByZip /> basic rendering', () => {
 
 	it('renders without crashing', () => {
@@ -99,11 +118,7 @@ describe('<LookupByZip /> rendering when there is weather data', () => {
 
 	beforeAll(() => {
 		wrapper = shallow(<LookupByZip />)
-		wrapper.setState({
-			result: {
-				name: 'Test City'
-			}
-		})
+		wrapper.setState({ result })
 	})
 
 	it('renders 1 <Frame> component', () => {
@@ -206,11 +221,7 @@ describe('<LookupByZip> Link functionality when there is weather data', () => {
 
 	it('contains a link to get weather by geolocation', () => {
 		const wrapper = shallow(<LookupByZip />)
-		wrapper.setState({
-			result: {
-				name: 'Testville'
-			}
-		})
+		wrapper.setState({ result })
 
 		expect(wrapper.find(Link).prop('to')).toBe('/lookup-by-geoloc')
 	})
@@ -222,11 +233,7 @@ describe('<Search> functionality when there is weather data', () => {
 	it('calls clearWeather when clicked', () => {
 		const wrapper = shallow(<LookupByZip />)
 		const instance = wrapper.instance()
-		wrapper.setState({
-			result: {
-				name: 'Testville'
-			}
-		})
+		wrapper.setState({ result })
 
 		jest.spyOn(instance, 'clearWeather')
 		wrapper.find(Search).at(0).simulate('click')
@@ -236,11 +243,7 @@ describe('<Search> functionality when there is weather data', () => {
 
 	it('clears result and error from state when clicked', () => {
 		const wrapper = shallow(<LookupByZip />)
-		wrapper.setState({
-			result: {
-				name: 'Testville'
-			}
-		})
+		wrapper.setState({ result })
 
 		wrapper.find(Search).at(0).simulate('click')
 
@@ -466,9 +469,9 @@ describe('directly invoking setWeatherInfo()', () => {
 	it('sets state correctly with a successful call', () => {
 		const wrapper = shallow(<LookupByZip />)
 		const instance = wrapper.instance()
-		const result = {
-			name: 'Testopia'
-		}
+		// const result = {
+		// 	name: 'Testopia'
+		// }
 		wrapper.setState({
 			zip: '12345',
 			searchClicked: true
@@ -476,7 +479,7 @@ describe('directly invoking setWeatherInfo()', () => {
 
 		instance.setWeatherInfo(result)
 
-		expect(wrapper.state('result')).toBe(result)
+		expect(wrapper.state('result')).toEqual(result)
 		expect(wrapper.state('zip')).toBe('')
 		expect(wrapper.state('searchClicked')).toBe(false)
 	})
@@ -484,7 +487,7 @@ describe('directly invoking setWeatherInfo()', () => {
 	it('sets state correctly with a bad zip', () => {
 		const wrapper = shallow(<LookupByZip />)
 		const instance = wrapper.instance()
-		const result = {
+		const error = {
 			cod: 'error'
 		}
 		wrapper.setState({
@@ -492,9 +495,9 @@ describe('directly invoking setWeatherInfo()', () => {
 			searchClicked: true
 		})
 
-		instance.setWeatherInfo(result)
+		instance.setWeatherInfo(error)
 
-		expect(wrapper.state('result')).toBe(result)
+		expect(wrapper.state('result')).toEqual(error)
 		expect(wrapper.state('zip')).toBe('99999')
 		expect(wrapper.state('searchClicked')).toBe(false)	
 	})
